@@ -1,0 +1,101 @@
+
+
+.menu{
+    position: fixed; /* Fixa no topo */
+    top: 0; /* Distância do topo */
+    left: 0;
+    width: 97vw; /* Ocupa a largura total */
+    background-color: #33333367;
+    color: white;
+    padding: 15px;
+    padding-right: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000; /* Garante que fique acima de outros elementos */
+    display: flex;
+    justify-content: space-between;
+
+    
+
+}
+
+.btn_menu{
+    align-self: center;
+    color: aliceblue;
+    background-color: rgba(240, 248, 255, 0);
+    border: none;
+    font-size: larger;
+}
+
+.btn_menu:hover {
+    color: rgb(48, 86, 255); /* Cor do texto ao passar o mouse */
+    cursor: pointer; /* Mostra o ponteiro de mão, indicando que é clicável */
+
+}
+
+.btn_menu:active {
+    transform: scale(0.98); /* Leve afundada ao clicar */
+}
+
+.btn_login{
+    border: solid 1px navy;
+    border-radius: 10px;
+    color:aliceblue;
+    background-color: navy;
+    width: 200px;
+    padding: 15px;
+    font-size: larger;
+    margin-right: 30px;
+}
+
+.btn_login:hover {
+    background-color: darkblue;
+    border-color: lightblue;
+    cursor: pointer;
+}
+
+.btn_login:active {
+    background-color: navy; /* Ainda mais escuro ao clicar */
+    transform: scale(0.97); /* Leve afundada ao clicar */
+}
+
+.conteudo-1{
+    display: flex;
+    flex-direction: column; /* Coloca um em cima do outro */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: flex-end;   /* Alinha à direita */
+    height: 100vh;
+    background-image:linear-gradient(rgba(0, 0, 0, 0.568), rgba(0, 0, 0, 0.589)),url('home.png'); /* imagem escurecida */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-right: 60px; /* Dá um espacinho da borda direita */
+    background-color: rgba(0, 0, 0, 0.5); /* Ajuste o nível de escurecimento aqui */
+
+    
+}
+.texto_conteudo1{
+    color: aliceblue;
+
+}
+
+.btn_entrar_contato{
+    border: solid 1px navy;
+    border-radius: 10px;
+    color:aliceblue;
+    background-color: navy;
+    width: 150px;
+    padding: 10px;
+    font-size: larger;
+
+}
+
+.btn_entrar_contato:hover{
+    background-color: darkblue;
+    border-color: lightblue;
+    cursor: pointer;
+}
+
+.btn_entrar_contato:active{
+    background-color: navy; /* Ainda mais escuro ao clicar */
+    transform: scale(0.97); /* Leve afundada ao clicar */
+}
