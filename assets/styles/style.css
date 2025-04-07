@@ -1,10 +1,13 @@
 
+body {
+    font-family: 'Poppins', sans-serif;
+}
 
 .menu{
     position: fixed; /* Fixa no topo */
     top: 0; /* Distância do topo */
     left: 0;
-    width: 97vw; /* Ocupa a largura total */
+    width: 100%; /* Ocupa a largura total */
     background-color: #33333367;
     color: white;
     padding: 15px;
@@ -41,7 +44,7 @@
     border-radius: 10px;
     color:aliceblue;
     background-color: navy;
-    width: 200px;
+    width: 100px;
     padding: 15px;
     font-size: larger;
     margin-right: 30px;
@@ -80,10 +83,10 @@
 
 .btn_entrar_contato{
     border: solid 1px navy;
-    border-radius: 10px;
+    border-radius: 24px;
     color:aliceblue;
     background-color: navy;
-    width: 150px;
+    width: 210px;
     padding: 10px;
     font-size: larger;
 
@@ -98,4 +101,81 @@
 .btn_entrar_contato:active{
     background-color: navy; /* Ainda mais escuro ao clicar */
     transform: scale(0.97); /* Leve afundada ao clicar */
+}
+
+
+
+.conteudo-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    gap: 40px;
+}
+.texto-conteudo2 {
+    flex: 1;
+    text-align: left;
+}
+.conteudo-2 img {
+    max-width: 500px;
+    height: auto;
+    flex: 1;
+}
+.conteudo-2 h1{
+    color: navy;
+}
+
+.conteudo-3 {
+    background-color: #001845;
+    padding: 60px 40px;
+    color: white;
+    text-align: center;
+}
+
+.conteudo-3 h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.cards-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: white;
+    color: #001845;
+    border-radius: 20px;
+    width: 300px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.imagem-card {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+}
+
+.imagem-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card h3 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 20px 20px 10px;
+}
+
+.card p {
+    margin: 0 20px 20px;
+    font-size: 0.95rem;
 }
