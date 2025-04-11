@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastre-se MedSense</title>
+</head>
+
+<body>
+    <div class="paiCadastro">
+        <div class="formCadastro">
+            <div class="text2">
+                <h1>Cadas<u>tre-se</u></h1>
+                <p>Insira aqui os dados da empresa.</p>
+            </div>
+            <div class="geral">
+                <div class="inputsCadastro">
+
+                    <label>Nome</label>
+                    <input type="text" id="ipt_nome" placeholder="Nome Social">
+
+
+                    <label>CNPJ</label>
+                    <input type="text" id="ipt_cnpj" placeholder="00.000.000/0001-00">
+
+                    <label>Telefone</label>
+                    <input type="text" id="ipt_telefone" placeholder="(00)00000-0000">
+
+                    <label>Senha</label>
+                    <input type="text" id="ipt_senha" placeholder="Senha">
+
+                </div>
+            </div>
+
+            <div class="botaoCadastro">
+                <button onclick="cadastrar()">Cadastrar</button>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="imagem">
+        <img src="MedSense.png">
+    </div>
+</body>
+
+</html>
+<script>
+    function cadastrar() {
+        var nome = ipt_nome.value
+        var cnpj = ipt_cnpj.value
+        var telefone = ipt_telefone.value
+        var senha = ipt_senha.value
+
+        if (senha == '' || nome == '' || cnpj == '' || telefone == '') {
+            alert("Todos os campos devem ser preenchidos")
+        }
+
+        else if (senha.length < 10) {
+            alert("A senha necessita ter 10 ou mais caracteres")
+        }
+
+        else if (
+            !senha.includes('*') &&
+            !senha.includes('@') &&
+            !senha.includes('$') &&
+            !senha.includes('#')
+        ) {
+            alert("É necessário sua senha incluir um caractere especial como *, @, $, #");
+        }
+
+        else if (nome == 'FarmaLab'
+            && telefone == '11952708759'
+            && cnpj == '11122233000144') {
+
+            alert('Cadastro feito com sucesso')
+        }
+        else {
+            alert("Cadastro inválido")
+        }
+    }
+
+</script>
