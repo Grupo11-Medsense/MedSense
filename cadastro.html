@@ -50,41 +50,6 @@
         <img src="MedSense.png">
     </div>
 </body>
+<script src="assets/scripts/script.js"></script>
 
 </html>
-<script>
-    function cadastrar() {
-        var nome = ipt_nome.value
-        var cnpj = ipt_cnpj.value
-        var telefone = ipt_telefone.value
-        var senha = ipt_senha.value
-
-        if (senha == '' || nome == '' || cnpj == '' || telefone == '') {
-            alert("Todos os campos devem ser preenchidos")
-        }
-
-        else if (senha.length < 10) {
-            alert("A senha necessita ter 10 ou mais caracteres")
-        }
-
-        else if (
-            !senha.includes('*') &&
-            !senha.includes('@') &&
-            !senha.includes('$') &&
-            !senha.includes('#')
-        ) {
-            alert("É necessário sua senha incluir um caractere especial como *, @, $, #");
-        }
-
-        else if (nome == 'FarmaLab'
-            && telefone == '11952708759'
-            && cnpj == '11122233000144') {
-
-            alert('Cadastro feito com sucesso')
-        }
-        else {
-            alert("Cadastro inválido")
-        }
-    }
-
-</script>
