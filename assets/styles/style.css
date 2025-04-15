@@ -3,7 +3,7 @@ body {
     padding: 0;
     font-family: 'Poppins', sans-serif;
     height: 100vh;
-    overflow-x: hidden;
+
 }
 
 .menu {
@@ -11,10 +11,10 @@ body {
     /* Fixa no topo */
     top: 0;
     /* Distância do topo */
-    left: 0;
-    width: 100%;
+    left: 3vh;
+    width: 95%;
+    height: 50px;
     /* Ocupa a largura total */
-    background-color: #333333c5;
     color: white;
     padding: 15px;
     padding-right: 15px;
@@ -23,9 +23,17 @@ body {
     /* Garante que fique acima de outros elementos */
     display: flex;
     justify-content: space-between;
+    box-shadow: none;
+    font-family: 'Poppins', sans-serif;
+}
 
-
-
+.menu.scrolled {
+    background-color: rgba(0, 0, 50, 0.9); /* Azul escuro com transparência */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.438); /* Sombra opcional */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    margin-top: 1vh;
+    border-radius: 50px;
+    
 }
 
 .btn_menu {
@@ -33,15 +41,39 @@ body {
     color: aliceblue;
     background-color: rgba(240, 248, 255, 0);
     border: none;
-    font-size: larger;
+    font-size: medium;
 }
 
-.btn_menu:hover {
-    color: rgb(48, 86, 255);
-    /* Cor do texto ao passar o mouse */
-    cursor: pointer;
-    /* Mostra o ponteiro de mão, indicando que é clicável */
+.btn_menu {
+    position: relative;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: color 0.3s ease;
+}
 
+.menu img {
+    width: 16%;
+    height: 90px;
+    margin-top: -3vh;
+}
+
+/* Linha que aparece ao passar o mouse */
+.btn_menu ::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #e9e9e9; /* Cor da linha */
+    left: 0;
+    bottom: 0;
+    transition: width 0.3s ease;
+}
+
+/* Expansão da linha no hover */
+.btn_menu:hover::after {
+    width: 100%;
 }
 
 .btn_menu:active {
@@ -50,14 +82,20 @@ body {
 }
 
 .btn_login {
-    border: solid 1px navy;
+    border:  none;
     border-radius: 10px;
     color: aliceblue;
     background-color: navy;
-    width: 100px;
-    padding: 15px;
-    font-size: larger;
+    width: 110px;
+    display: flex;
+    margin-top: 1vh;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: large;
     margin-right: 30px;
+    display: flex;
+   
 }
 
 .btn_login:hover {
@@ -92,36 +130,39 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     /* Ajuste o nível de escurecimento aqui */
     padding-top: 80px;
-
+    margin-top: -6vh;
 
 }
 
 .texto_conteudo1 {
     color: aliceblue;
-
+    text-align: end;
+    font-family: 'Poppins', sans-serif;
+    font-weight:bolder; 
 }
 
 .btn_entrar_contato {
-    border: solid 1px navy;
+    border: none;
     border-radius: 24px;
     color: aliceblue;
     background-color: navy;
     width: 210px;
     padding: 10px;
-    font-size: larger;
-
+    font-size: medium;
+    transition: transform 0.9s;
 }
 
 .btn_entrar_contato:hover {
     background-color: darkblue;
     border-color: lightblue;
     cursor: pointer;
+    transform: scale(1.2);
 }
 
 .btn_entrar_contato:active {
     background-color: navy;
     /* Ainda mais escuro ao clicar */
-    transform: scale(0.97);
+   
     /* Leve afundada ao clicar */
 }
 
@@ -129,26 +170,37 @@ body {
 
 .conteudo-2 {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    padding: 50px;
-    gap: 40px;
+    height: 600px;
+    
 }
 
 .texto-conteudo2 {
-    flex: 1;
     text-align: left;
 }
 
 .conteudo-2 img {
     max-width: 500px;
-    height: auto;
-    flex: 1;
+    height: 100%;
+    margin-bottom: -8vh;
+    box-shadow: -1px 2px 100px -12px rgba(0, 0, 0, 0.492);
+
+    
+}
+.bluesquare {
+    height: 200px;
+    width: 350px;
+    margin-top: -15vh;
+    margin-left: 40%;
+    background-color: navy;
 }
 
 .conteudo-2 h1 {
     color: navy;
 }
+
+/* cards de beneficios */
 
 .conteudo-3 {
     background-color: #001845;
@@ -162,52 +214,77 @@ body {
     margin-bottom: 40px;
     font-weight: bold;
 }
-
 .cards-container {
     display: flex;
-    gap: 30px;
     justify-content: center;
+    gap: 30px;
+    padding: 60px 20px;
     flex-wrap: wrap;
+    background-color: #001845; /* Fundo azul escuro */
+    font-family: 'Poppins', sans-serif;
 }
 
 .card {
-    background-color: white;
-    color: #001845;
+    background-color: #fff;
     border-radius: 20px;
-    width: 300px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    max-width: 290px;
+    height: 400px;
+    box-shadow: -1px 2px 100px -12px rgba(255, 255, 255, 0.484);
+
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+   
 }
 
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* Estilo da imagem com corte diagonal inferior */
 .imagem-card {
+    position: relative;
     width: 100%;
     height: 180px;
-    position: relative;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
 }
 
 .imagem-card img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+   
 }
 
-.card h3 {
+.card h2 {
+    margin-bottom: -3vh;
+    font-size: 20px;
     font-weight: bold;
-    font-size: 1.2rem;
-    margin: 20px 20px 10px;
+    color: #001845;
+    text-align: start;
+    margin-left: 2vh;
+    box-shadow: -1px 2px 100px -12px rgba(255, 255, 255, 0.268);
 }
 
 .card p {
-    margin: 0 20px 20px;
-    font-size: 0.95rem;
+    color: #2a2a2a;
+    text-align: start;
+    padding: 3vh;
+    font-weight: bold;
+    line-height: 1.5;
 }
 
+/* seção das bolinhas */
 
-.conteudo-4 {
-    background-color: #001845;
-    padding: 60px 40px;
+.conteudo-4 {  
+    padding: 40px 40px;
     color: white;
-    text-align: center;
+    text-align: justify;
+    font-weight: bold;
+    background-color: #012870;
+
 }
 
 .conteudo-4 h2 {
@@ -215,11 +292,18 @@ body {
     font-weight: bold;
     margin-bottom: 50px;
     text-align: center;
+    color: rgb(255, 255, 255);
+}
+
+.textinho {
+    margin-top: -5vh;
+    margin-bottom: 15vh;
+    text-align: center;
 }
 
 .etapas-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     gap: 40px;
 }
@@ -227,6 +311,7 @@ body {
 .etapa {
     width: 220px;
     text-align: center;
+    
 }
 
 .etapa img {
@@ -237,9 +322,110 @@ body {
     padding: 20px;
     object-fit: contain;
     margin-bottom: 15px;
+    box-shadow: -1px 2px 100px -12px rgba(255, 255, 255, 0.484);
+    transition: transform 0.9s ease;
 }
+
 
 .etapa p {
     font-size: 0.95rem;
     line-height: 1.4;
 }
+
+/* seção do simulador financeiro  */
+
+.simulador {
+    display: flex;
+    flex-direction: column;
+}
+
+.titulocalc p {
+    margin-top: 10vh;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.desc p {
+    text-align: center;
+}
+
+.calculo {
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.inputs {
+    height: 100%;
+    width: 40%;
+
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    text-align: start;
+    align-items: center;
+}
+
+.inputs input {
+    width: 100%;
+    height: 35px;
+    border: none;
+    background-color: #8da4d784;
+    border-radius: 20px;
+    padding-left: 3vh;
+}
+
+.inputs h3{
+    text-align: center;
+}
+
+input:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+
+.especifico {
+    height: 100%;
+    display: flex;
+    margin-top: 5vh;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 2vh;
+}
+.resultado {
+    height: 100%;
+    width: 40%;
+
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px; /* espaçamento entre os elementos */
+   
+  }
+  
+  .divider {
+    width: 2px;
+    background-color: #10158a; /* mesma cor do seu tema */
+    height: 350px; /* ajuste conforme a altura do conteúdo */
+    margin-top: 18vh
+  }
+
+  .resultado {
+    margin-top: 5vh;
+  }
+  
+  .resultado h3 {
+    text-align: center;
+  }
+
+
+
+  

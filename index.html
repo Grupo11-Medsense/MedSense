@@ -12,12 +12,12 @@
 <body>
 
     <div class="menu">
-        <img src="assets/styles/medsense.png" alt="logo">
+        <img src="logo2.svg" alt="logo">
         <div class="btn_menu">
-            <button class="btn_menu">Serviços</button>
-            <button class="btn_menu">Simulação</button>
-            <button class="btn_menu">Sobre nós</button>
-            <button class="btn_menu">Contato</button>
+            <a href="#inicio" class="btn_menu">Início</a>
+            <a href="#sobre" class="btn_menu">Sobre Nós</a>
+            <a href="#solucao" class="btn_menu">Solução</a>
+            <a href="#contato" class="btn_menu">Contato</a>
         </div>
         <button class="btn_login">Login</button>
     </div>
@@ -26,7 +26,8 @@
 
     <div class="conteudo-1">
         <h1 class="texto_conteudo1">
-            Evite prejuizos e salve vidas <br> usando a tecnologia a seu favor.
+            Evite prejuizos e salve vidas <br> usando a <span style="color: rgb(2, 2, 175);">tecnologia a seu
+                favor.</span>
         </h1>
         <h2 class="texto_conteudo1">
             Conheça nosso sistema Inteligente para<br>
@@ -41,17 +42,19 @@
             <h1><b>O que é o Me<u>dSense?</u></b></h1>
             <br>
             <h3>
-                O MedSense é um sistema inteligente para o <br>
-                monitoramento de medicamentos termolábeis,<br>
+                O <span style="color: rgb(3, 3, 165);">MedSense </span>é um sistema inteligente para o <br>
+                monitoramento de <span style="color: rgb(3, 3, 165);">medicamentos termolábeis,</span> <br>
                 garantindo que sejam mantidos dentro das condições <br>
                 ideais de temperatura. Com monitoramento em tempo <br>
                 real, alertas automáticos e relatórios detalhados, o <br>
                 MedSense assegura a integridade dos produtos <br>
-                durante o armazenamento e transporte.
+                durante o armazenamento.
             </h3>
         </div>
         <div>
+
             <img src="assets/styles/session1.jpg" alt="">
+            <div class="bluesquare"></div>
         </div>
     </div>
 
@@ -62,7 +65,7 @@
                 <div class="imagem-card">
                     <img src="assets/styles/card1.png" alt="">
                 </div>
-                <h3>Análise rápida dos dados</h3>
+                <h2>Análise rápida dos dados</h2>
                 <p>Fornecemos relatórios detalhados sobre os resultados dos sensores, ajudando na tomada de decisões.
                 </p>
             </div>
@@ -71,7 +74,7 @@
                 <div class="imagem-card">
                     <img src="assets/styles/card2.png" alt="">
                 </div>
-                <h3>Redução de perdas</h3>
+                <h2>Redução de perdas</h2>
                 <p>Nossa tecnologia minimiza riscos e perdas financeiras, assegurando a qualidade dos produtos.</p>
             </div>
 
@@ -79,14 +82,16 @@
                 <div class="imagem-card">
                     <img src="assets/styles/card3.png" alt="">
                 </div>
-                <h3>Proteção de fármacos</h3>
+                <h2>Proteção de fármacos</h2>
                 <p>Monitoramos temperatura e umidade para garantir a integridade dos medicamentos.</p>
             </div>
         </div>
     </div>
 
     <div class="conteudo-4">
-        <h2>Como funciona?</h2>
+        <h2>Como <u>funciona?</u></h2>
+        <p class="textinho">Conheça como nossa solução funciona em poucos passos!</p>
+
         <div class="etapas-container">
             <div class="etapa">
                 <img src="assets/styles/comofun1.png" alt="">
@@ -107,10 +112,68 @@
         </div>
     </div>
 
-    
+    <div class="simulador">
+        <div class="titulocalc">
+            <p>A perda de medicamentos afeta não apenas a <span style="color: rgb(2, 2, 163);">economia</span>, <br> mas
+                também a <span style="color: rgb(2, 2, 163);">saúde de diversas pessoas!</span></p>
+        </div>
+        <div class="desc">
+            <p>Veja o quanto você pode economizar com a solução MedSense</p>
+        </div>
+        <div class="calculo">
+
+            <div class="inputs">
+
+                <div class="especifico">
+                <h3>informações da <span style="color: rgb(2, 2, 163);">empresa</span></h3>
+
+                <label for="">Nome</label>
+                <input id="ipt_nome">
+
+                <label for="">Porte (pequeno, médio ou grande)</label>
+                <input id="ipt_porte">
+
+
+                    <br><br>
+
+                <h3>informações da <span style="color: rgb(2, 2, 163);">produção</span></h3>
+
+                <label for="">Custo por lote (R$)</label>
+                <input id="ipt_custo">
+
+                <label for="">Lotes produzidos mensalmente</label>
+                <input id="ipt_lotesmes">
+
+                <label for="">Risco á saúde</label>
+                <input id="ipt_risco">
+
+                
+                
+            </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="resultado">
+                <h3><span style="color: rgb(2, 2, 163);">Resultado</span></h3>
+            </div>
+        </div>
+
+        <!-- sobre nós  -->
+
+        <div class="sobrenos">
+        
+        </div>
+
+    </div>
 
 
 </body>
-<script src="assets/scripts/script.js"></script>
+<script src="assets/scripts/script.js">
+
+
+
+</script>
 
 </html>

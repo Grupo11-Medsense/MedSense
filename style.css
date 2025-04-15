@@ -1,18 +1,18 @@
 body {
     /* background: linear-gradient(20deg, rgba(5,11,66,1) 30%, rgba(11,76,176,1) 100%) fixed; */
-    background-color: whitesmoke;
+    background-color: aliceblue;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 15vh;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'poppins';
     font-weight: 600;
     font-style: normal;
 }
 
 .pai {
     width: 30%;
-    height: 500px;
+    height: 530px;
     border-radius: 10px;
     flex-direction: row;
     display: flex;
@@ -22,7 +22,7 @@ body {
 
 .paiCadastro {
     width: 30%;
-    height: 500px;
+    height: 530px;
     border-radius: 10px;
     flex-direction: row;
     display: flex;
@@ -32,7 +32,7 @@ body {
 
 .imagem {
     width: 28%;
-    height: 500px;
+    height: 530px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     flex-direction: row;
@@ -84,7 +84,7 @@ body {
     width: 60%;
     justify-content: space-evenly;
     display: flex;
-    margin-bottom: 3vh;
+    margin-bottom: 1vh;
 }
 
 .inputsCadastro {
