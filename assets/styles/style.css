@@ -7,6 +7,9 @@ body {
     overflow-x: hidden;
     animation: fadeIn 1s ease forwards;
 }
+html {
+    scroll-behavior: smooth;
+  }
 
 @keyframes fadeIn {
     to {
@@ -232,6 +235,7 @@ body {
 
 .conteudo-2 h1 {
     color: navy;
+    font-size: 35px;
 }
 
 /* cards de beneficios */
@@ -586,6 +590,7 @@ label {
 .nomecli {
     text-align: center;
     color: navy;
+    font-size: 15px;
 }
 
 @keyframes deslizar {
@@ -600,7 +605,7 @@ label {
 /* estilização footer */
 
 .footer {
-    height: 450px;
+    height: 500px;
     background-color:  rgb(10, 18, 75);
     display: flex;
     flex-direction: row;
@@ -618,6 +623,7 @@ label {
 .logo-footer img {
     width: 100%;
     align-self: center;
+    margin-top: 10vh;
 }
 .infos-footer h3 {
     margin-bottom: -2vh;
@@ -628,7 +634,7 @@ label {
     font-size: 40px;
     color: white;
     font-weight: 800;
-    margin-top: -5vh;
+    
     margin-left: 7vh;
 }
 
@@ -691,6 +697,8 @@ padding: 2vh;
     flex-direction: row;
     background-color:  rgb(10, 18, 75);
     justify-content: center;
+    margin-top: vh;
+    width: 100%;
 }
 
 .redes img {
