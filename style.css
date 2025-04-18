@@ -16,8 +16,8 @@ body {
     border-radius: 10px;
     flex-direction: row;
     display: flex;
-    
-    box-shadow: 0px 1px 63px -17px rgba(0,0,0,0.77);
+
+    box-shadow: 0px 1px 63px -17px rgba(0, 0, 0, 0.77);
 }
 
 .paiCadastro {
@@ -26,8 +26,8 @@ body {
     border-radius: 10px;
     flex-direction: row;
     display: flex;
-    
-    box-shadow: 0px 1px 63px -17px rgba(0,0,0,0.77);
+
+    box-shadow: 0px 1px 63px -17px rgba(0, 0, 0, 0.77);
 }
 
 .imagem {
@@ -38,8 +38,8 @@ body {
     flex-direction: row;
     display: flex;
     background-color: rgb(0, 0, 54);
-    box-shadow: 0px 1px 63px -17px rgba(0,0,0,0.77);
- 
+    box-shadow: 0px 1px 63px -17px rgba(0, 0, 0, 0.77);
+
 }
 
 .imagem img {
@@ -50,6 +50,7 @@ body {
     margin-left: 3vh;
     margin-top: 5vh;
 }
+
 .form {
     width: 100%;
     background-color: rgb(255, 255, 255);
@@ -94,7 +95,7 @@ body {
     justify-content: space-evenly;
     display: flex;
     margin-bottom: -3vh;
-    
+
 }
 
 
@@ -122,6 +123,7 @@ input {
     margin-left: 7vh;
     margin-top: 3vh;
 }
+
 .text2 {
     align-self: flex-start;
     margin-left: 7vh;
@@ -131,17 +133,19 @@ input {
 p {
     color: rgb(71, 70, 70);
 }
+
 .botao {
     align-self: flex-start;
     margin-left: 13vh;
     width: 60%;
 }
+
 .botaoCadastro {
     align-self: flex-start;
     margin-left: 14.5vh;
     width: 56%;
     margin-top: 3vh;
-  
+
 }
 
 
@@ -156,4 +160,9 @@ button {
     background-color: rgb(0, 7, 62);
     color: aliceblue;
     font-size: large;
+}
+
+.cadastro-link {
+    text-align: center;
+    margin-top: 15px;
 }

@@ -7,9 +7,10 @@ body {
     overflow-x: hidden;
     animation: fadeIn 1s ease forwards;
 }
+
 html {
     scroll-behavior: smooth;
-  }
+}
 
 @keyframes fadeIn {
     to {
@@ -545,7 +546,7 @@ label {
     display: flex;
     justify-content: center;
     margin-top: 10vh;
-    text-align: center;  
+    text-align: center;
     font-size: larger;
 }
 
@@ -573,13 +574,16 @@ label {
     background-color: #ffffff;
     box-shadow: -1px 2px 100px -12px rgba(0, 0, 0, 0.184);
     border-radius: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* animação suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* animação suave */
 }
 
 
 .card-feed:hover {
-    transform: translateY(-10px); /* sobe o card */
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2); /* sombra mais forte ao passar o mouse */
+    transform: translateY(-10px);
+    /* sobe o card */
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    /* sombra mais forte ao passar o mouse */
 }
 
 .comentario p {
@@ -595,25 +599,28 @@ label {
 
 @keyframes deslizar {
     0% {
-      transform: translateX(0);
+        transform: translateX(0);
     }
-    100% { 
-      transform: translateX(-50%);
+
+    100% {
+        transform: translateX(-50%);
     }
-  }
+}
 
 /* estilização footer */
 
 .footer {
     height: 500px;
-    background-color:  rgb(10, 18, 75);
+    background-color: rgb(10, 18, 75);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
 }
 
-.logo-footer , .infos-footer , .form {
+.logo-footer,
+.infos-footer,
+.form {
     height: 100%;
     width: 33%;
     display: flex;
@@ -625,16 +632,18 @@ label {
     align-self: center;
     margin-top: 10vh;
 }
+
 .infos-footer h3 {
     margin-bottom: -2vh;
     margin-left: 9vh;
     color: white;
 }
+
 .infos-footer h1 {
     font-size: 40px;
     color: white;
     font-weight: 800;
-    
+
     margin-left: 7vh;
 }
 
@@ -648,24 +657,26 @@ label {
 }
 
 .form {
- padding-left: 10vh;
- padding-right: 10vh;
- color: white;
- margin-top: -2vh;
- display: flex;
- justify-content: center;
- align-content: center;
- margin-right: -10vh;
+    padding-left: 10vh;
+    padding-right: 10vh;
+    color: white;
+    margin-top: -2vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-right: -10vh;
 }
 
-.form input, textarea {
-width: 70%;
-border-radius: 25px;
-border: none;
-padding: 2vh;
+.form input,
+textarea {
+    width: 70%;
+    border-radius: 25px;
+    border: none;
+    padding: 2vh;
 }
 
-.form textarea, input:focus {
+.form textarea,
+input:focus {
     outline: none;
     border: none;
     box-shadow: none;
@@ -686,16 +697,13 @@ padding: 2vh;
 .enviar button {
     font-family: 'Poppins', 'sans-serif';
     font-weight: 700;
-    
-}
-.enviar :focus {
-    border: none;
+
 }
 
 .redes {
     display: flex;
     flex-direction: row;
-    background-color:  rgb(10, 18, 75);
+    background-color: rgb(10, 18, 75);
     justify-content: center;
     margin-top: vh;
     width: 100%;
