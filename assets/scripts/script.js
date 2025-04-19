@@ -149,12 +149,17 @@ function login(){
         alert('Email incorreto');
     } else {
         alert('login feito')
+        //window.location.href = 'dashboard.html';
     }
 }
 
 
 
-
+/*<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        setupIntersectionObserver();
+    });
+</script>*/
 
 
 
