@@ -1,9 +1,3 @@
-var senha = '';
-var email = '';
-
-
-
-
 
 // efeitos da navbar 
 
@@ -62,6 +56,7 @@ function cadastrar() {
     var letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
+
     // varre a string 'senha' aplicando a verificação de todas as regras da senha 
     for (var i = 0; i < senha.length; i++) {
         var caracter = senha[i];
@@ -100,7 +95,9 @@ function cadastrar() {
         valido = false;
     } else if (ipt_senha.value!=ipt_senha2.value){
         alert('A senha e a confirmação devem coincidir')
-    } else if (temMaiuscula && temEspecial && temMinuscula && temNumero && (ipt_senha.value==ipt_senha2.value)) {
+    }else if (!ipt_email.value.endsWith('@medsense.com') ){
+        alert('O email deve terminar com @medsense.com')
+    } else if (temMaiuscula && temEspecial && temMinuscula && temNumero && (ipt_senha.value==ipt_senha2.value) && (ipt_email.value.endsWith('@medsense.com'))) {
         valido = true
     }
 
