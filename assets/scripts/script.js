@@ -1,6 +1,7 @@
 var senha = '';
-var email = 'SpFarma@medsense.com';
+var email = '';
 var senha_login = '';
+var email_login = ''
 
 
 
@@ -41,7 +42,7 @@ function cadastrar() {
     var nome = ipt_nome.value
     var cnpj = ipt_cnpj.value
     var telefone = ipt_telefone.value
-    var senha2= ipt_senha2.value
+    
     senha = ipt_senha.value
 
     // Variavel booleana validar a senha
@@ -95,9 +96,9 @@ function cadastrar() {
     } else if (!temEspecial) {
         alert('A senha deve conter pelo menos um caractere especial (ex: !@#$%).');
         valido = false;
-    } else if (senha!=senha2){
+    } else if (ipt_senha.value!=ipt_senha2.value){
         alert('A senha e a confirmação devem coincidir')
-    } else if (temMaiuscula && temEspecial && temMinuscula && temNumero && (senha == senha2)) {
+    } else if (temMaiuscula && temEspecial && temMinuscula && temNumero && (ipt_senha.value==ipt_senha2.value)) {
         valido = true
     }
 
@@ -106,17 +107,48 @@ function cadastrar() {
 
         alert('Recebemos sua solicitamos de cadastro, entraremos em contato para o alinhamento das propostas. ');
 
+        senha = ipt_senha.value;
+        email = ipt_email.value;
+
+        // armazena localmente:
+        localStorage.setItem('medsense_email', email);
+        localStorage.setItem('medsense_password', senha);
+
+        window.location.href = 'login.html'; 
     }
 
 }
 
 // Login
 
+
 function login(){
+    var senhalogin = ipt_senhaLogin.value;
+    var emaillogin = ipt_emailLogin.value; 
     
-    senha_login = senha.value;
-    if(senha_login != senha){
-        alert('Senha incorreta')
+    var storedEmail = localStorage.getItem('medsense_email');
+    var storedPassword = localStorage.getItem('medsense_password'); 
+
+    console.log("Tentando logar com:");
+    console.log("Email digitado:", emaillogin);
+    console.log("Senha digitada:", senhalogin);
+    console.log("Email armazenado:", storedEmail);
+    console.log("Senha armazenada:", storedPassword);
+
+
+
+
+    if (!storedEmail || !storedPassword) {
+        alert('Nenhum usuário cadastrado. Por favor, cadastre-se primeiro.');
+    }    
+
+
+    if (senhalogin != storedPassword) { 
+        alert('Senha incorreta');
+    } else if (emaillogin != storedEmail) { 
+        alert('Email incorreto');
+    } else {
+        alert('login feito')
     }
 }
 
@@ -132,7 +164,7 @@ function login(){
 
 function calcular(){
     resultado.innerHTML= '';
-    var ax_nome=ipt_nome.value;
+    var ax_nome=ipt_nome_sim.value;
     var ax_tamanho=ipt_tamanho.value;
     var ax_custoLote=Number(ipt_custoLote.value);
     var ax_loteporMes=Number(ipt_loteMes.value);
