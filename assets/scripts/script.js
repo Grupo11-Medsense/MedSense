@@ -1,7 +1,6 @@
 var senha = '';
 var email = '';
-var senha_login = '';
-var email_login = ''
+
 
 
 
@@ -36,6 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // funções do cadastro
+
+var senha = '';
+var email = '';
 
 function cadastrar() {
     // Inputs
@@ -119,7 +121,7 @@ function cadastrar() {
 
 }
 
-// Login
+// Login:
 
 
 function login(){
@@ -152,15 +154,6 @@ function login(){
         //window.location.href = 'dashboard.html';
     }
 }
-
-
-
-/*<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        setupIntersectionObserver();
-    });
-</script>*/
-
 
 
 
