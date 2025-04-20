@@ -442,7 +442,7 @@ label {
 .resultado {
     height: 100%;
     width: 40%;
-
+    margin-left: 20px;
 }
 
 .form-wrapper {
