@@ -1,0 +1,312 @@
+body {
+    font-family: 'Poppins', 'sans-serif';
+}
+
+.menulateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: navy;
+    height: 100vh;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.imgcliente {
+    height: 18%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fotouser {
+    height: 51%;
+    width: 30%;
+    border-radius: 50%;
+}
+
+.fotouser img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.nomeuser {
+    height: 20%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 2vh;
+    color: white;
+}
+
+.line {
+    width: 90%;
+}
+
+.navegacao {
+    text-align: start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6vh;
+}
+
+.navegacao a {
+    text-decoration: none;
+    color: white;
+    margin-top: -3vh;
+    font-weight: 700;
+    font-size: larger;
+}
+
+ul {
+    list-style: none;
+}
+
+.icon img {
+    margin-bottom: -0.5vh;
+}
+
+.geral {
+    margin-left: 20%;
+    margin-top: 7%;
+    width: 80%;
+    height: 100%;
+}
+
+.titulo {
+    font-size: larger;
+    color: navy;
+}
+
+.infos1 {
+    width: 90%;
+    height: 5%;
+    display: flex;
+    margin-bottom: 2vh;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.kpis {
+    flex-direction: row;
+    display: flex;
+    margin-right: 10%;
+    justify-content: space-between;
+}
+
+.indicador {
+    flex-direction: row;
+    display: flex;
+    width: 20%;
+    height: 10%;
+    color: white;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.graficos {
+    margin-top: 5vh;
+    height: 30%;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.graficoTemp,
+.graficoUmid {
+    width: 40%;
+} 
+
+.logout {
+    display: flex;
+    flex-direction: row;
+    margin-top: 45vh;
+    align-self: center;
+}
+
+.logout img {
+    width: 30px;
+}
+
+.cards {
+    height: auto;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.cool-card {
+    background: #ffffff;
+    border-left: 5px solid #ff5252;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.229);
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 600px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .cool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+  
+  .alerta-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .alert-icon {
+    font-size: 1.5rem;
+  }
+  
+  .alert-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #b00000;
+  }
+  
+  .alert-desc {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .alert-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .alert-status.success {
+    color: #2e7d32;
+    font-weight: 600;
+  }
+/* ----------------- RESPONSIVIDADE ----------------- */
+
+@media screen and (max-width: 1024px) {
+    .menulateral {
+        width: 20%;
+    }
+
+    .geral {
+        margin-left: 22%;
+        width: 75%;
+    }
+
+    .alerta-card {
+        width: 80%;
+    }
+
+    .graficos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .graficoTemp,
+    .graficoUmid {
+        width: 80%;
+        margin-bottom: 2vh;
+    }
+
+    .indicador {
+        width: 40%;
+        margin-bottom: 1vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menulateral {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 1vh;
+        position: static;
+    }
+
+    .geral {
+        margin: 0;
+        width: 100%;
+        margin-top: 10vh;
+    }
+
+    .cards {
+        width: 100%;
+    }
+
+    .alerta-card {
+        width: 90%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .graficos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .graficoTemp,
+    .graficoUmid {
+        width: 90%;
+    }
+
+    .indicador {
+        width: 80%;
+        justify-content: space-between;
+    }
+
+    .logout {
+        margin-top: 2vh;
+        align-self: flex-end;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .fotouser {
+        width: 50%;
+    }
+
+    .nomeuser {
+        font-size: 14px;
+    }
+
+    .navegacao a {
+        font-size: 14px;
+    }
+
+    .alerta-card {
+        width: 95%;
+        font-size: 14px;
+        padding: 1vh 3vh;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .cool-card {
+      padding: 1rem;
+    }
+  
+    .alert-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }

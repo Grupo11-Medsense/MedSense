@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dash.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=dashboard" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="menulateral">
+        <img src="MedSense/logo2.svg">
+
+        <div class="imgcliente">
+            <div class="fotouser">
+                <img src="MedSense/default-avatar-icon-of-social-media-user-vector.jpg">
+            </div>
+            <div class="nomeuser">
+                <h2>Thiago Prates</h2>
+            </div>
+        </div>
+
+        <hr class="line">
+
+        <div class="navegacao">
+
+
+            <ul>
+                <li class="icon">
+                    <img src="MedSense/dashicon.svg">
+                    <a href="dashboard.html"> Dashboard</a>
+                </li>
+
+                <li class="icon">
+                    <img src="MedSense/alerticon.svg">
+                    <a href="alertasDash.html"> Alertas</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="logout">
+            <a href="MedSense/login.html"><img src="MedSense/logout.svg"></a>
+        </div>
+    </div>
+
+    <div class="geral">
+        <div class="titulo">
+            <h1 style="color: rgb(179, 2, 2);">Alertas</h1>
+        </div>
+        <h3>Periodo
+            <select name="semanal" id=""
+                style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
+                <option value="semanal">Semanal</option>
+                <option value="anual">Anual</option>
+                <option value="mensal">Mensal</option>
+            </select>
+        </h3>
+
+        <div class="cards">
+
+            <div class="alerta-card cool-card">
+                <div class="alerta-header">
+                  <span class="alert-icon">⚠️</span>
+                  <h3 class="alert-title">Umidade Baixa</h3>
+                </div>
+                <p class="alert-desc">
+                  A umidade registrada foi de <strong>39%</strong>, abaixo do ideal.
+                </p>
+                <div class="alert-footer">
+                  <span class="alert-date">18 de Abril de 2025</span>
+                  <span class="alert-status success">🟢 Resolvido</span>
+                </div>
+              </div>
+              
+              <div class="alerta-card cool-card">
+                <div class="alerta-header">
+                  <span class="alert-icon">⚠️</span>
+                  <h3 class="alert-title">Temperatura alta</h3>
+                </div>
+                <p class="alert-desc">
+                  A temperatura registrada foi de <strong>9°C</strong>, isso é acima do ideal.
+                </p>
+                <div class="alert-footer">
+                  <span class="alert-date">17 de Abril de 2025</span>
+                  <span class="alert-status success">🟢 Resolvido</span>
+                </div>
+              </div>
+
+              <div class="alerta-card cool-card">
+                <div class="alerta-header">
+                  <span class="alert-icon">⚠️</span>
+                  <h3 class="alert-title">Umidade Baixa</h3>
+                </div>
+                <p class="alert-desc">
+                  A umidade registrada foi de <strong>38%</strong>, abaixo do ideal.
+                </p>
+                <div class="alert-footer">
+                  <span class="alert-date">16 de Abril de 2025</span>
+                  <span class="alert-status success">🟢 Resolvido</span>
+                </div>
+              </div>
+
+              <div class="alerta-card cool-card">
+                <div class="alerta-header">
+                  <span class="alert-icon">⚠️</span>
+                  <h3 class="alert-title">Temperatura Baixa</h3>
+                </div>
+                <p class="alert-desc">
+                  A temperatura registrada foi de <strong>1°C</strong>, abaixo do ideal.
+                </p>
+                <div class="alert-footer">
+                  <span class="alert-date">16 de Abril de 2025</span>
+                  <span class="alert-status success">🟢 Resolvido</span>
+                </div>
+              </div>
+            
+    </div>
+
+</body>
+
+</html>
