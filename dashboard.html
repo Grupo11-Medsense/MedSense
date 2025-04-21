@@ -1,159 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dash.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=dashboard" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dash.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=dashboard" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>Dashboard</title>
 </head>
+
 <body>
-    <div class="menulateral">
-        <img src="logo2.svg">
+  <div class="menulateral">
+    <img src="logo2.svg">
 
-        <div class="imgcliente">
-            <div class="fotouser">
-                <img src="default-avatar-icon-of-social-media-user-vector.jpg">
-            </div>
-            <div class="nomeuser">
-                <h2>Thiago Prates</h2>
-            </div>
-        </div>
-
-        <hr class="line">     
-
-        <div class="navegacao">
-            
-            
-           <ul>
-            <li class="icon">
-                <img src="dashicon.svg">
-                <a href="dashboard.html"> Dashboard</a>
-            </li>
-
-            <li class="icon">
-                <img src="alerticon.svg">
-                <a href="alertasDash.html"> Alertas</a>
-            </li>
-           </ul>
-           
-        </div>
-
-        <div class="logout">
-            <a href="MedSense/login.html"><img src="logout.svg"></a>
-        </div>
+    <div class="imgcliente">
+      <div class="fotouser">
+        <img src="default-avatar-icon-of-social-media-user-vector.jpg">
+      </div>
+      <div class="nomeuser">
+        <h2>Thiago Prates</h2>
+      </div>
     </div>
 
-    <div class="geral">
-        <div class="titulo">
-            <h1>Dashboard</h1>
-        </div>
-        <div class="infos1">
-            <h3>Número da geladeira: 
-            <select name="" id="" style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
-                <option value="SetorA">01 - Setor A</option>
-                <option value="SetorB">01 - Setor B</option>
-                <option value="SetorC">01 - Setor C</option>
-            </select></h3> 
+    <hr class="line">
 
-            <h3>Periodo dos registros: 
-                <select name="" id=""  style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
-                    <option value="Semanal">Semanal</option>
-                    <option value="Mensal">Mensal</option>
-                    <option value="Anual">Anual</option>
-                </select>
-            </h3>
-        </div>
+    <div class="navegacao">
 
-        <!-- indicadores  -->
-         <div class="kpis">
-            <div class="indicador" style="background-color: navy;">
-                <h3>Temperatura <br> Média</h3>
-                <h1>5°C</h1>
-            </div>
-            <div class="indicador" style="background-color: navy;">
-                <h3>Umidade <br> Média</h3>
-                <h1>63%</h1>
-            </div>
-            <div class="indicador" style="background-color: rgb(11, 143, 11);">
-                <h3>Conformidade <br> térmica semanal</h3>
-                <h1>95%</h1>
-            </div>
-            <div class="indicador" style="background-color: rgb(133, 7, 7);">
-                <h3>Alertas emitidos <br> essa semana</h3>
-                <h1>4</h1>
-            </div>
-         </div>
 
-         <!-- gráficos  -->
+      <ul>
+        <li class="icon">
+          <img src="dashicon.svg">
+          <a href="dashboard.html"> Dashboard</a>
+        </li>
 
-         <div class="graficos">
+        <li class="icon">
+          <img src="alerticon.svg">
+          <a href="alertasDash.html"> Alertas</a>
+        </li>
+      </ul>
 
-         <div class="graficoTemp">
-            <h2>Temperatura semanal</h2>
-              <div> 
-                <canvas id="myChart"></canvas>
-              </div>
-         </div>
-         
-         <div class="graficoUmid">
-            <h2>Umidade semanal</h2>
-              <div> 
-                <canvas id="myChart2"></canvas>
-              </div>
-         </div>
-
-        </div>
     </div>
+
+    <div class="logout">
+      <a href="index.html"><img src="logout.svg"></a>
+    </div>
+  </div>
+
+  <div class="geral">
+    <div class="titulo">
+      <h1>Dashboard</h1>
+    </div>
+    <div class="infos1">
+      <h3>Número da geladeira:
+        <select name="" id=""
+          style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
+          <option value="SetorA">01 - Setor A</option>
+          <option value="SetorB">01 - Setor B</option>
+          <option value="SetorC">01 - Setor C</option>
+        </select>
+      </h3>
+
+      <h3>Periodo dos registros:
+        <select name="" id=""
+          style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
+          <option value="Semanal">Semanal</option>
+          <option value="Mensal">Mensal</option>
+          <option value="Anual">Anual</option>
+        </select>
+      </h3>
+    </div>
+
+    <!-- indicadores  -->
+    <div class="kpis">
+      <div class="indicador" style="background-color: navy;">
+        <h3>Temperatura <br> Média</h3>
+        <h1>5°C</h1>
+      </div>
+      <div class="indicador" style="background-color: navy;">
+        <h3>Umidade <br> Média</h3>
+        <h1>63%</h1>
+      </div>
+      <div class="indicador" style="background-color: rgb(11, 143, 11);">
+        <h3>Conformidade <br> térmica semanal</h3>
+        <h1>95%</h1>
+      </div>
+      <div class="indicador" style="background-color: rgb(133, 7, 7);">
+        <h3>Alertas emitidos <br> essa semana</h3>
+        <h1>4</h1>
+      </div>
+    </div>
+
+    <!-- gráficos  -->
+
+    <div class="graficos">
+
+      <div class="graficoTemp">
+        <h2>Temperatura semanal</h2>
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+
+      <div class="graficoUmid">
+        <h2>Umidade semanal</h2>
+        <div>
+          <canvas id="myChart2"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </body>
+
 </html>
 
 <script>
-    const ctx = document.getElementById('myChart');
-  
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-        datasets: [{
-          label: 'Temperatura',
-          data: [2, 3, 1, 8, 9, 5, 4], 
-          backgroundColor: 'navy',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+  const ctx = document.getElementById('myChart');
 
-    const ctx2 = document.getElementById('myChart2');
-  
-    new Chart(ctx2, {
-      type: 'line',
-      data: {
-        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-        datasets: [{
-          label: 'Umidade',
-          data: [50, 68, 38, 52, 45, 39, 53], 
-          backgroundColor: '#03459c',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+      datasets: [{
+        label: 'Temperatura',
+        data: [2, 3, 1, 8, 9, 5, 4],
+        backgroundColor: 'navy',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
         }
       }
-    });
-  </script>
+    }
+  });
+
+  const ctx2 = document.getElementById('myChart2');
+
+  new Chart(ctx2, {
+    type: 'line',
+    data: {
+      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+      datasets: [{
+        label: 'Umidade',
+        data: [50, 68, 38, 52, 45, 39, 53],
+        backgroundColor: '#03459c',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>

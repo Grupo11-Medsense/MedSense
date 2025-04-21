@@ -147,8 +147,7 @@ function login(){
     } else if (emaillogin != storedEmail) { 
         alert('Email incorreto');
     } else {
-        alert('login feito')
-        //window.location.href = 'dashboard.html';
+        window.location.href = 'dashboard.html';
     }
 }
 
