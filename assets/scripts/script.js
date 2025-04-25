@@ -134,6 +134,7 @@ function login() {
         alert('Senha incorreta');
     } else if (emaillogin != storedEmail) {
         alert('Email incorreto');
+
     } else {
         window.location.href = 'dashboard.html';
     }
