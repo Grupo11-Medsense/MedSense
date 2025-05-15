@@ -1,62 +1,79 @@
 -- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
 -- Você precisa executar os comandos no banco de dados para criar as tabelas,
 -- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
-
 /*
 comandos para mysql server
-*/
+ */
+create database testemed;
 
-CREATE DATABASE aquatech;
+use testemed;
 
-USE aquatech;
-
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
-);
+create table empresa (
+		idEmpresa INT primary key auto_increment,
+		nome varchar(45),
+		cnpj char(14),
+		tokenAtivacao varchar(45)
+	);
 
 CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+		idUsuario INT PRIMARY KEY AUTO_INCREMENT,
+		nome VARCHAR(45),
+		email VARCHAR(45),
+		senha VARCHAR(45),
+		fkEmpresaUsuario INT,
+		CONSTRAINT fk_EmpresaUsuario FOREIGN KEY (fkEmpresaUsuario) REFERENCES empresa (idEmpresa)
+	);
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
-);
+CREATE TABLE setor (
+		idSetor INT PRIMARY KEY AUTO_INCREMENT,
+		andar VARCHAR(45),
+		setor VARCHAR(45),
+		fkEmpresaSetor INT,
+		CONSTRAINT fk_EmpresaSetor FOREIGN KEY (fkEmpresaSetor) REFERENCES empresa (idEmpresa)
+	);
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+create table geladeira (
+		idGeladeira INT primary key auto_increment,
+		capacidade varchar(45),
+		marca varchar(45),
+		fkSetor INT,
+		constraint fk_Setor foreign key (fkSetor) references setor (idSetor)
+	);
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
+CREATE TABLE sensor (
+		idSensor INT PRIMARY KEY AUTO_INCREMENT,
+		situacao VARCHAR(45),
+		fkGeladeira INT,
+		FOREIGN KEY (fkGeladeira) REFERENCES geladeira (idGeladeira)
+	);
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
+create table
+	registro (
+		idRegistro INT auto_increment,
+		fkSensor INT,
+		temperatura float (10.2),
+		umidade float (10.2),
+		dtRegistro datetime default current_timestamp,
+		primary key (idRegistro, fkSensor),
+		constraint fk_Sensor foreign key (fkSensor) references sensor (idSensor)
+	);
 
-insert into Empresa (nome, TokenAtivacao) values ('Empresa 1', 'ED145B');
-insert into Empresa (nome, TokenAtivacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+insert into
+	empresa (nome, tokenAtivacao)
+values
+	('Empresa 1', 'ED145B');
+
+insert into
+	empresa (nome, tokenAtivacao)
+values
+	('Empresa 2', 'A1B2C3');
+
+insert into
+	aquario (descricao, fk_empresa)
+values
+	('Aquário de Estrela-do-mar', 1);
+
+insert into
+	aquario (descricao, fk_empresa)
+values
+	('Aquário de Peixe-dourado', 2);

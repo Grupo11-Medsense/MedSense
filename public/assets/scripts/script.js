@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 var senha = '';
 var email = '';
+let listaEmpresasCadastradas = [];
 
 function cadastrar() {
     // declaração das variaveis que recebem o valor dos inputs
@@ -39,6 +40,9 @@ function cadastrar() {
     var cnpj = ipt_cnpj.value
     var telefone = ipt_telefone.value
     senha = ipt_senha.value
+    var codigoVar = codigo_input.value;
+    var idEmpresaVincular
+
 
     // decraclaração das variaveies booleanas  para validar a senha
     var valido = false;
@@ -91,29 +95,108 @@ function cadastrar() {
         valido = false;
     } else if (ipt_senha.value != ipt_senha2.value) {
         alert('A senha e a confirmação devem coincidir')
-    } else if (!ipt_email.value.endsWith('@medsense.com')) {
-        alert('O email deve terminar com @medsense.com')
+    } else if (codigo_input.value == '') {
+        alert('O código de vinculação deve ser preenchido')
     } else if (temMaiuscula && temEspecial && temMinuscula && temNumero && (ipt_senha.value == ipt_senha2.value) && (ipt_email.value.endsWith('@medsense.com'))) {
         valido = true
     }
+
+    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+        if (listaEmpresasCadastradas[i].tokenAtivacao == codigoVar) {
+            idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa
+            console.log("Código de ativação válido.");
+            break;
+        } else {
+            alert('Código de ativação inválido. Verifique o código e tente novamente.');
+
+        }
+    }
+
+
+
+
 
 
     // Se os dados fornecidos nos inputs de cadastros forem válido, a senha e email serao armazenados localmente com o localStorage e abre a janela do login com window.location
     if (valido) {
 
+
+
+
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeServer: nome,
+                emailServer: email,
+                senhaServer: senha,
+                idEmpresaVincularServer: idEmpresaVincular
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    cardErro.style.display = "block";
+
+                    mensagem_erro.innerHTML =
+                        "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                    setTimeout(() => {
+                        window.location = "login.html";
+                    }, "2000");
+
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+
+            });
+
+
+
         alert('Recebemos sua solicitamos de cadastro, entraremos em contato para o alinhamento das propostas. ');
 
-        senha = ipt_senha.value;
-        email = ipt_email.value;
-
-        // armazena localmente:
-        localStorage.setItem('medsense_email', email);
-        localStorage.setItem('medsense_password', senha);
 
         window.location.href = 'login.html';
     }
 
 }
+
+
+
+// Listando empresas cadastradas
+function listar() {
+    fetch("/empresas/listar", {
+        method: "GET",
+    })
+        .then(function (resposta) {
+            resposta.json().then((empresas) => {
+                empresas.forEach((empresa) => {
+                    listaEmpresasCadastradas.push(empresa);
+
+                    console.log("listaEmpresasCadastradas")
+                    console.log(listaEmpresasCadastradas[0].tokenAtivacao)
+                });
+            });
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+}
+
+
+
+
+
+
+
 
 // Login:
 
