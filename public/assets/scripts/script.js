@@ -119,7 +119,8 @@ function cadastrar() {
 
     // Se os dados fornecidos nos inputs de cadastros forem válido, a senha e email serao armazenados localmente com o localStorage e abre a janela do login com window.location
     if (valido) {
-
+        email = ipt_email.value;
+        senha= ipt_senha.value;
 
 
 
@@ -200,27 +201,62 @@ function listar() {
 
 // Login:
 
-function login() {
-    var senhalogin = ipt_senhaLogin.value;
-    var emaillogin = ipt_emailLogin.value;
-
-    var storedEmail = localStorage.getItem('medsense_email');
-    var storedPassword = localStorage.getItem('medsense_password');
 
 
-    if (!storedEmail || !storedPassword) {
-        alert('Nenhum usuário cadastrado. Por favor, cadastre-se primeiro.');
+
+
+
+function entrar() {
+
+
+    var emailVar = ipt_emailLogin.value;
+    var senhaVar = ipt_senhaLogin.value;
+
+    if (emailVar == "" || senhaVar == "") {
+        alert('Mensagem de erro para todos os campos em branco');
     }
 
+    console.log("FORM LOGIN: ", emailVar);
+    console.log("FORM SENHA: ", senhaVar);
 
-    if (senhalogin != storedPassword) {
-        alert('Senha incorreta');
-    } else if (emaillogin != storedEmail) {
-        alert('Email incorreto');
+    fetch("/usuarios/autenticar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            emailServer: emailVar,
+            senhaServer: senhaVar
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
 
-    } else {
-        window.location.href = 'dashboard.html';
-    }
+        if (resposta.ok) {
+            console.log(resposta);
+
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                sessionStorage.EMAIL_USUARIO = json.email;
+                sessionStorage.NOME_USUARIO = json.nome;
+                sessionStorage.ID_USUARIO = json.idUsuario;
+                alert(`Seja bem-vindo(a)`);
+                window.location = "dashboard.html";
+
+            });
+        } else {
+
+            console.log("Houve um erro ao tentar realizar o login!");
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
 }
 
 
