@@ -58,6 +58,13 @@ create table
 		constraint fk_Sensor foreign key (fkSensor) references sensor (idSensor)
 	);
 
+
+
+
+
+
+
+-- inserts da tabela empresa:
 insert into
 	empresa (nome, tokenAtivacao)
 values
@@ -68,12 +75,13 @@ insert into
 values
 	('Empresa 2', 'A1B2C3');
 
-insert into
-	aquario (descricao, fk_empresa)
-values
-	('Aquário de Estrela-do-mar', 1);
 
-insert into
-	aquario (descricao, fk_empresa)
-values
-	('Aquário de Peixe-dourado', 2);
+-- inserts da tabela setor
+insert into setor (andar, setor,fkEmpresaSetor) values (4,'A', 1);
+
+-- insert da tabela geladeira
+insert into geladeira (capacidade, marca, fkSetor) values ('150 litros','Eletrolux',1);
+
+
+-- insert da tabela sensor
+insert into sensor (situacao,fkGeladeira) values ('ativo',1);

@@ -29,7 +29,17 @@ function buscarMedidasEmTempoReal(idAquario) {
     return database.executar(instrucaoSql);
 }
 
+function inseriraleatorio(randTemperatura, randUmidade, fkSensor) {
+    var instrucaoSql = `INSERT INTO registro (temperatura, umidade, fkSensor, dtRegistro) VALUES (${randTemperatura}, ${randUmidade}, ${fkSensor}, default);`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+
+
+
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasEmTempoReal,
+    inseriraleatorio
 }
