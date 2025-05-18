@@ -125,6 +125,71 @@
 <script>
   const ctx = document.getElementById('myChart');
 
+
+
+  function simularArduino() {
+
+    var umidade = (Math.random() * 100).toFixed();
+    var temperatura = (Math.random() * 10).toFixed(1);
+    console.log(umidade, temperatura);
+
+
+
+    fetch("/medidas/inseriraleatorio", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+
+        randTemperatura: temperatura,
+        randUmidade: umidade,
+        fkSensorServer:1
+
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+        
+        if (resposta.ok) {
+          console.log("Resposta ok");
+        } else {
+          throw "deu ruim na resposta!";
+          alert("deu ruim na resposta!");
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+
+      });
+      
+
+
+    
+  }
+
+  
+  setInterval(() => {
+    simularArduino();
+  }, 3000);
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   new Chart(ctx, {
     type: 'bar',
     data: {
