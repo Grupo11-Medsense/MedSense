@@ -49,15 +49,25 @@
 
         </div>
 
-        <div class="logout">
-            <a href="index.html"><img src="assets/image/logout.svg"></a>
-        </div>
+         <div class="logout"> 
+      <a href="index.html" style="text-decoration: none; color: rgb(255, 0, 0);"><p>Sair</p></a>
+    </div>
     </div>
 
     <div class="geral">
         <div class="titulo">
-            <h1 style="color: rgb(179, 2, 2);">Alertas</h1>
+            <h1 style="color: rgb(179, 2, 2);">Detalhamento de alertas</h1>
         </div>
+
+        
+    <div class="legenda">
+      <div class="temp"><p style="color: navy;"> Temperatura ideal:</p><span>2ºC a 8ºC</span></div> 
+      <div class="umidade"><p style="color: navy;">  Umidade ideal: </p><span>  40% a 70%</span></div> 
+    </div>
+
+    <div class="desc">
+      <h2>Acompanhe detalhes e faça observações a cerca dos alertas emitidos </h2>
+    </div>
         <h3>Periodo
             <select name="semanal" id=""
                 style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
@@ -71,58 +81,20 @@
 
             <div class="alerta-card cool-card">
                 <div class="alerta-header">
-                  <span class="alert-icon">⚠️</span>
-                  <h3 class="alert-title">Umidade Baixa</h3>
+                  
+                  <h3 class="alert-title">⚠️ Umidade Baixa</h3> <span class="alert-date">18 de Abril de 2025</span>
                 </div>
                 <p class="alert-desc">
                   A umidade registrada foi de <strong>39%</strong>, abaixo do ideal.
                 </p>
-                <div class="alert-footer">
-                  <span class="alert-date">18 de Abril de 2025</span>
-                  <span class="alert-status success">🟢 Resolvido</span>
+                <div class="obs-alert">
+                  <p><b style="color: rgb(116, 0, 0);">Adicione uma observação sobre a ocorrência</b></p>
+                  <textarea name="" id=""></textarea>
+                  
                 </div>
               </div>
               
-              <div class="alerta-card cool-card">
-                <div class="alerta-header">
-                  <span class="alert-icon">⚠️</span>
-                  <h3 class="alert-title">Temperatura alta</h3>
-                </div>
-                <p class="alert-desc">
-                  A temperatura registrada foi de <strong>9°C</strong>, isso é acima do ideal.
-                </p>
-                <div class="alert-footer">
-                  <span class="alert-date">17 de Abril de 2025</span>
-                  <span class="alert-status success">🟢 Resolvido</span>
-                </div>
-              </div>
-
-              <div class="alerta-card cool-card">
-                <div class="alerta-header">
-                  <span class="alert-icon">⚠️</span>
-                  <h3 class="alert-title">Umidade Baixa</h3>
-                </div>
-                <p class="alert-desc">
-                  A umidade registrada foi de <strong>38%</strong>, abaixo do ideal.
-                </p>
-                <div class="alert-footer">
-                  <span class="alert-date">16 de Abril de 2025</span>
-                  <span class="alert-status success">🟢 Resolvido</span>
-                </div>
-              </div>
-
-              <div class="alerta-card cool-card">
-                <div class="alerta-header">
-                  <span class="alert-icon">⚠️</span>
-                  <h3 class="alert-title">Temperatura Baixa</h3>
-                </div>
-                <p class="alert-desc">
-                  A temperatura registrada foi de <strong>1°C</strong>, abaixo do ideal.
-                </p>
-                <div class="alert-footer">
-                  <span class="alert-date">16 de Abril de 2025</span>
-                  <span class="alert-status success">🟢 Resolvido</span>
-                </div>
+             
               </div>
             
     </div>

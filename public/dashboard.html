@@ -49,8 +49,8 @@
 
     </div>
 
-    <div class="logout">
-      <a href="index.html"><img src="assets/image/logout.svg"></a>
+    <div class="logout"> 
+      <a href="index.html" style="text-decoration: none; color: rgb(255, 0, 0);"><p>Sair</p></a>
     </div>
   </div>
 
@@ -58,23 +58,38 @@
     <div class="titulo">
       <h1>Monitoramento térmico de medicamentos</h1>
     </div>
+
+
+    <div class="legenda">
+      <div class="temp"><p style="color: navy;"> Temperatura ideal:</p><span>2ºC a 8ºC</span></div> 
+      <div class="umidade"><p style="color: navy;">  Umidade ideal: </p><span>  40% a 70%</span></div> 
+    </div>
+
+
     <div class="infos1">
       <h3>Número da geladeira:
         <select name="" id=""
           style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
-          <option value="SetorA">01 - Setor A</option>
-          <option value="SetorB">01 - Setor B</option>
-          <option value="SetorC">01 - Setor C</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+        </select>
+      </h3>
+
+       <h3>Setor:
+        <select name="" id=""
+          style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
         </select>
       </h3>
 
       <h3>Periodo dos registros:
-        <select name="" id=""
-          style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
-          <option value="Semanal">Semanal</option>
-          <option value="Mensal">Mensal</option>
-          <option value="Anual">Anual</option>
-        </select>
+        <input type="date">
       </h3>
     </div>
 
@@ -85,15 +100,15 @@
         <h1>5°C</h1>
       </div>
       <div class="indicador" style="background-color: navy;">
-        <h3>Umidade <br> Média</h3>
-        <h1>63%</h1>
+        <h3>Setor com mais ocorrências<br></h3>
+        <h3>Setor B</h3>
       </div>
       <div class="indicador" style="background-color: rgb(11, 143, 11);">
         <h3>Conformidade <br> térmica semanal</h3>
         <h1>95%</h1>
       </div>
       <div class="indicador" style="background-color: rgb(133, 7, 7);">
-        <h3>Alertas emitidos <br> essa semana</h3>
+        <h3>Alertas emitidos <br> esse mês</h3>
         <h1>4</h1>
       </div>
     </div>
@@ -103,14 +118,14 @@
     <div class="graficos">
 
       <div class="graficoTemp">
-        <h2>Temperatura semanal</h2>
+        <h2>Captura de Temperatura</h2>
         <div>
           <canvas id="myChart"></canvas>
         </div>
       </div>
 
       <div class="graficoUmid">
-        <h2>Umidade semanal</h2>
+        <h2>Captura de Umidade</h2>
         <div>
           <canvas id="myChart2"></canvas>
         </div>
@@ -121,7 +136,7 @@
 </body>
 
 </html>
-
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
 <script>
   const ctx = document.getElementById('myChart');
 
@@ -190,45 +205,131 @@
 
 
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-      datasets: [{
-        label: 'Temperatura',
-        data: [2, 3, 1, 8, 9, 5, 4],
-        backgroundColor: 'navy',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+ new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+    datasets: [{
+      label: 'Temperatura',
+      data: [2, 3, 1, 8, 9, 5, 4],
+      backgroundColor: 'navy',
+      borderColor: 'navy',
+      borderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      annotation: {
+        annotations: {
+          faixaIdeal: {
+            type: 'box',
+            yMin: 2,
+            yMax: 8,
+            backgroundColor: 'rgba(0, 0, 128, 0.1)', // azul claro transparente
+            borderColor: 'navy',
+            borderWidth: 1,
+          },
+          limiteMin: {
+            type: 'line',
+            yMin: 2,
+            yMax: 2,
+            borderColor: 'blue',
+            borderWidth: 1,
+            borderDash: [6, 6],
+            label: {
+              content: 'Mínimo (2°C)',
+              enabled: true,
+              position: 'start'
+            }
+          },
+          limiteMax: {
+            type: 'line',
+            yMin: 8,
+            yMax: 8,
+            borderColor: 'red',
+            borderWidth: 1,
+            borderDash: [6, 6],
+            label: {
+              content: 'Máximo (8°C)',
+              enabled: true,
+              position: 'start'
+            }
+          }
         }
       }
+    },
+    scales: {
+      y: {
+        beginAtZero: false
+      }
     }
-  });
+  }
+});
+
 
   const ctx2 = document.getElementById('myChart2');
 
   new Chart(ctx2, {
-    type: 'line',
-    data: {
-      labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-      datasets: [{
-        label: 'Umidade',
-        data: [50, 68, 38, 52, 45, 39, 53],
-        backgroundColor: '#03459c',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+  type: 'line',
+  data: {
+    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+    datasets: [{
+      label: 'Umidade',
+      data: [50, 68, 38, 52, 45, 39, 53],
+      backgroundColor: '#03459c',
+      borderColor: 'navy',
+      borderWidth: 3
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      annotation: {
+        annotations: {
+          faixaIdeal: {
+            type: 'box',
+            yMin: 40,
+            yMax: 70,
+            backgroundColor: 'rgba(0, 0, 128, 0.1)', // faixa azul clara
+            borderColor: 'navy',
+            borderWidth: 1,
+          },
+          limiteMin: {
+            type: 'line',
+            yMin: 40,
+            yMax: 40,
+            borderColor: 'blue',
+            borderWidth: 1,
+            borderDash: [6, 6],
+            label: {
+              content: 'Limite Mínimo',
+              enabled: true,
+              position: 'start'
+            }
+          },
+          limiteMax: {
+            type: 'line',
+            yMin: 70,
+            yMax: 70,
+            borderColor: 'red',
+            borderWidth: 2,
+            borderDash: [6, 6],
+            label: {
+              content: 'Limite Máximo',
+              enabled: true,
+              position: 'start'
+            }
+          }
         }
       }
+    },
+    scales: {
+      y: {
+        beginAtZero: false
+      }
     }
-  });
+  }
+});
+
 </script>

@@ -74,8 +74,8 @@ ul {
 }
 
 .geral {
-    margin-left: 20%;
-    margin-top: 7%;
+    margin-left: 18%;
+    margin-top: 1%;
     width: 80%;
     height: 100%;
 }
@@ -86,7 +86,7 @@ ul {
 }
 
 .infos1 {
-    width: 90%;
+    width: 95%;
     height: 5%;
     display: flex;
     margin-bottom: 2vh;
@@ -98,6 +98,7 @@ ul {
     flex-direction: row;
     display: flex;
     margin-right: 10%;
+    width: 97%;
     justify-content: space-between;
 }
 
@@ -105,18 +106,37 @@ ul {
     flex-direction: row;
     display: flex;
     width: 20%;
-    height: 10%;
+    height: 7%;
     color: white;
     padding-left: 2vh;
     padding-right: 2vh;
     justify-content: space-between;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+
+.legenda {
+    width: 60%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.temp, .umidade {
+    width: 48%;
+    height: 100%;
+    background-color: #c9c9c9;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 23px;
+    font-weight: 500;
 }
 
 .graficos {
-    margin-top: 5vh;
-    height: 30%;
-    width: 90%;
+    margin-top: 2vh;
+    height: 28%;
+    width: 98%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -124,7 +144,8 @@ ul {
 
 .graficoTemp,
 .graficoUmid {
-    width: 40%;
+    width: 50%;
+    height: 90%;
 } 
 
 .logout {
@@ -169,6 +190,7 @@ ul {
     align-items: center;
     gap: 0.8rem;
     margin-bottom: 1rem;
+    justify-content: space-between;
   }
   
   .alert-icon {
@@ -193,11 +215,44 @@ ul {
     font-size: 0.9rem;
     color: #666;
   }
+
+  .obs-alert {
+    width: 100%;
+  }
+
+  textarea {
+    width: 100%;
+  }
   
   .alert-status.success {
     color: #2e7d32;
     font-weight: 600;
   }
+
+   input[type="date"] {
+    background-color: #f0f4f8;
+    border: 2px solid #001f3f; /* azul marinho */
+    color: #001f3f;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s ease;
+  }
+
+  input[type="date"]::placeholder {
+    color: #001f3f;
+    opacity: 0.6;
+  }
+
+  input[type="date"]:focus {
+    border-color: #003366;
+    box-shadow: 0 0 5px rgba(0, 31, 63, 0.5);
+  }
+
+  
+
 /* ----------------- RESPONSIVIDADE ----------------- */
 
 @media screen and (max-width: 1024px) {
@@ -297,6 +352,7 @@ ul {
         padding: 1vh 3vh;
     }
 }
+
 
 
 @media (max-width: 768px) {
