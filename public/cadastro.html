@@ -14,7 +14,7 @@
     <title>Cadastre-se MedSense</title>
 </head>
 
-<body>
+<body onload="listar()">
 
 
 
@@ -40,6 +40,9 @@
                 <div class="inputsCadastro">
                     <label>Telefone</label>
                     <input type="text" id="ipt_telefone" placeholder="(00)00000-0000">
+
+                    <label>Codio de Ativação</label>
+                    <input id="codigo_input" type="text" placeholder="Insira aqui seu código">
 
                     <label>Senha</label>
                     <input type="password" id="ipt_senha" placeholder="Senha">
