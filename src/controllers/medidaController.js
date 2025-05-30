@@ -1,14 +1,54 @@
 var medidaModel = require("../models/medidaModel");
 
-function buscarUltimasMedidas(req, res) {
+function buscarUltimasTemperaturas(req, res) {
 
-    const limite_linhas = 7;
+    const limite_linhas = 8;
+     const fkSensor = 2;
 
-    var idAquario = req.params.idAquario;
+    console.log(`Recuperando as ultimas ${fkSensor, limite_linhas} medidas`);
 
-    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
+    medidaModel.buscarUltimasTemperaturas( limite_linhas).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas temperaturas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
-    medidaModel.buscarUltimasMedidas(idAquario, limite_linhas).then(function (resultado) {
+function buscarUltimasUmidades(req, res) {
+
+    const limite_linhas = 8;
+     const fkSensor = 2;
+
+    console.log(`Recuperando as ultimas ${fkSensor, limite_linhas} medidas`);
+
+    medidaModel.buscarUltimasUmidades(limite_linhas).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas umidades.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
+
+function buscarTemperaturaEmTempoReal(req, res) {
+
+    var temperatura = req.body.randTemperatura;
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarTemperaturaEmTempoReal(temperatura).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -21,14 +61,13 @@ function buscarUltimasMedidas(req, res) {
     });
 }
 
+function buscarUmidadeEmTempoReal(req, res) {
 
-function buscarMedidasEmTempoReal(req, res) {
-
-    var idAquario = req.params.idAquario;
+    var umidade = req.body.randUmidade;
 
     console.log(`Recuperando medidas em tempo real`);
 
-    medidaModel.buscarMedidasEmTempoReal(idAquario).then(function (resultado) {
+    medidaModel.buscarUmidadeEmTempoReal(umidade).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -46,7 +85,7 @@ function inseriraleatorio(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var randTemperatura = req.body.randTemperatura;
     var randUmidade = req.body.randUmidade;
-    var fkSensor = req.body.fkSensorServer;
+    var fkSensor = 2;
 
 
     // Faça as validações dos valores
@@ -87,8 +126,10 @@ function inseriraleatorio(req, res) {
 
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal,
+    buscarUltimasTemperaturas,
+    buscarUltimasUmidades,
+    buscarTemperaturaEmTempoReal,
+    buscarUmidadeEmTempoReal,
     inseriraleatorio
 
 }

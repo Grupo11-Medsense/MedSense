@@ -49,7 +49,6 @@ function cadastrar() {
     var temMaiuscula = false;
     var temMinuscula = false;
     var temNumero = false;
-    var temEspecial = false;
 
     // variaveis contendo as regras para a senha
     var caracteresEspeciais = "!@#$%^&*()_+-=[]{};':\"\\|,.<>/?";
@@ -71,16 +70,14 @@ function cadastrar() {
         } else if (numeros.includes(caracter)) {
             temNumero = true;
 
-        } else if (caracteresEspeciais.includes(caracter)) {
-            temEspecial = true;
-        }
+        } 
     }
 
 
     if (senha == '' || nome == '' || cnpj == '' || telefone == '') {
         alert("Todos os campos devem ser preenchidos")
-    } else if (senha.length < 10) {
-        alert("A senha necessita ter 10 ou mais caracteres")
+    } else if (senha.length < 6) {
+        alert("A senha necessita ter 6 ou mais caracteres")
     } else if (!temMaiuscula) {
         alert('A senha deve conter pelo menos uma letra maiúscula.');
         valido = false;
@@ -90,14 +87,11 @@ function cadastrar() {
     } else if (!temNumero) {
         alert('A senha deve conter pelo menos um número.');
         valido = false;
-    } else if (!temEspecial) {
-        alert('A senha deve conter pelo menos um caractere especial (ex: !@#$%).');
-        valido = false;
     } else if (ipt_senha.value != ipt_senha2.value) {
         alert('A senha e a confirmação devem coincidir')
     } else if (codigo_input.value == '') {
         alert('O código de vinculação deve ser preenchido')
-    } else if (temMaiuscula && temEspecial && temMinuscula && temNumero && (ipt_senha.value == ipt_senha2.value) && (ipt_email.value.endsWith('@medsense.com'))) {
+    } else if (temMaiuscula && temMinuscula && temNumero && (ipt_senha.value == ipt_senha2.value)) {
         valido = true
     }
 
@@ -106,9 +100,6 @@ function cadastrar() {
             idEmpresaVincular = listaEmpresasCadastradas[i].idEmpresa
             console.log("Código de ativação válido.");
             break;
-        } else {
-            alert('Código de ativação inválido. Verifique o código e tente novamente.');
-
         }
     }
 
@@ -161,8 +152,6 @@ function cadastrar() {
             });
 
 
-
-        alert('Recebemos sua solicitamos de cadastro, entraremos em contato para o alinhamento das propostas. ');
 
 
         window.location.href = 'login.html';

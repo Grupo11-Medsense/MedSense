@@ -49,8 +49,10 @@
 
     </div>
 
-    <div class="logout"> 
-      <a href="index.html" style="text-decoration: none; color: rgb(255, 0, 0);"><p>Sair</p></a>
+    <div class="logout">
+      <a href="index.html" style="text-decoration: none; color: rgb(255, 0, 0);">
+        <p>Sair</p>
+      </a>
     </div>
   </div>
 
@@ -61,8 +63,12 @@
 
 
     <div class="legenda">
-      <div class="temp"><p style="color: navy;"> Temperatura ideal:</p><span>2ºC a 8ºC</span></div> 
-      <div class="umidade"><p style="color: navy;">  Umidade ideal: </p><span>  40% a 70%</span></div> 
+      <div class="temp">
+        <p style="color: navy;"> Temperatura ideal:</p><span>2ºC a 8ºC</span>
+      </div>
+      <div class="umidade">
+        <p style="color: navy;"> Umidade ideal: </p><span> 40% a 70%</span>
+      </div>
     </div>
 
 
@@ -76,7 +82,7 @@
         </select>
       </h3>
 
-       <h3>Setor:
+      <h3>Setor:
         <select name="" id=""
           style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
           <option value="A">A</option>
@@ -139,6 +145,21 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
 <script>
   const ctx = document.getElementById('myChart');
+  const ctx2 = document.getElementById('myChart2');
+
+
+  let proximaAtualizacao;
+
+window.onload = () => {
+  obterDadosGrafico(1);
+  obterDadosGrafico2(2);
+
+  setInterval(() => {
+    simularArduino()
+    buscarTemperaturaEmTempoReal();
+    buscarUmidadeEmTempoReal();
+  }, 5000);
+};
 
 
 
@@ -159,13 +180,13 @@
 
         randTemperatura: temperatura,
         randUmidade: umidade,
-        fkSensorServer:1
+        fkSensorServer: 1
 
       }),
     })
       .then(function (resposta) {
         console.log("resposta: ", resposta);
-        
+
         if (resposta.ok) {
           console.log("Resposta ok");
         } else {
@@ -177,159 +198,285 @@
         console.log(`#ERRO: ${resposta}`);
 
       });
-      
 
 
-    
+
+
   }
 
-  
+
   setInterval(() => {
     simularArduino();
   }, 3000);
-    
-
-  
 
 
 
 
 
 
+  function obterDadosGrafico(temperatura) {
+
+
+    fetch(`/medidas/ultimas/temperatura`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+
+          plotarctx(resposta);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+  function plotarctx(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+    var dados = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Temperatura',
+          borderColor: '#32B9CD',
+          data: []
+        }
+      ]
+    };
 
 
 
+    for (i = resposta.length - 1; i >= 0; i--) {
+      var registro = resposta[i];
+      dados.labels.push(registro.horario);
+      dados.datasets[0].data.push(registro['temperatura']);
+    }
 
-
-
-
-
-
- new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-    datasets: [{
-      label: 'Temperatura',
-      data: [2, 3, 1, 8, 9, 5, 4],
-      backgroundColor: 'navy',
-      borderColor: 'navy',
-      borderWidth: 3
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      annotation: {
-        annotations: {
-          faixaIdeal: {
-            type: 'box',
-            yMin: 2,
-            yMax: 8,
-            backgroundColor: 'rgba(0, 0, 128, 0.1)', // azul claro transparente
-            borderColor: 'navy',
-            borderWidth: 1,
-          },
-          limiteMin: {
-            type: 'line',
-            yMin: 2,
-            yMax: 2,
-            borderColor: 'blue',
-            borderWidth: 1,
-            borderDash: [6, 6],
-            label: {
-              content: 'Mínimo (2°C)',
-              enabled: true,
-              position: 'start'
+    window.myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dados.labels,
+        datasets: [{
+          label: 'Temperatura',
+          data: dados.datasets[0].data,
+          backgroundColor: 'navy',
+          borderColor: 'navy',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              faixaIdeal: {
+                type: 'box',
+                yMin: 2,
+                yMax: 8,
+                backgroundColor: 'rgba(0, 0, 128, 0.1)',
+                borderColor: 'navy',
+                borderWidth: 1,
+              },
+              limiteMin: {
+                type: 'line',
+                yMin: 2,
+                yMax: 2,
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Mínimo (2°C)',
+                  enabled: true,
+                  position: 'start'
+                }
+              },
+              limiteMax: {
+                type: 'line',
+                yMin: 8,
+                yMax: 8,
+                borderColor: 'red',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Máximo (8°C)',
+                  enabled: true,
+                  position: 'start'
+                }
+              }
             }
-          },
-          limiteMax: {
-            type: 'line',
-            yMin: 8,
-            yMax: 8,
-            borderColor: 'red',
-            borderWidth: 1,
-            borderDash: [6, 6],
-            label: {
-              content: 'Máximo (8°C)',
-              enabled: true,
-              position: 'start'
-            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false
           }
         }
       }
-    },
-    scales: {
-      y: {
-        beginAtZero: false
-      }
-    }
+    });
   }
-});
+
+  function obterDadosGrafico2(umidade) {
 
 
-  const ctx2 = document.getElementById('myChart2');
+    fetch(`/medidas/ultimas/umidade`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
 
-  new Chart(ctx2, {
-  type: 'line',
-  data: {
-    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-    datasets: [{
-      label: 'Umidade',
-      data: [50, 68, 38, 52, 45, 39, 53],
-      backgroundColor: '#03459c',
-      borderColor: 'navy',
-      borderWidth: 3
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      annotation: {
-        annotations: {
-          faixaIdeal: {
-            type: 'box',
-            yMin: 40,
-            yMax: 70,
-            backgroundColor: 'rgba(0, 0, 128, 0.1)', // faixa azul clara
-            borderColor: 'navy',
-            borderWidth: 1,
-          },
-          limiteMin: {
-            type: 'line',
-            yMin: 40,
-            yMax: 40,
-            borderColor: 'blue',
-            borderWidth: 1,
-            borderDash: [6, 6],
-            label: {
-              content: 'Limite Mínimo',
-              enabled: true,
-              position: 'start'
+          plotarctx2(resposta);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+  function plotarctx2(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+    var dados = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Umidade',
+          borderColor: '#32B9CD',
+          data: []
+        }
+      ]
+    };
+
+
+
+    for (i = resposta.length - 1; i >= 0; i--) {
+      var registro = resposta[i];
+      dados.labels.push(registro.horario);
+      dados.datasets[0].data.push(registro['umidade']);
+    }
+
+    const ctx2 = document.getElementById('myChart2');
+
+    window.myChart2 = new Chart(ctx2, { 
+      type: 'line',
+      data: {
+        labels: dados.labels,
+        datasets: [{
+          label: 'Umidade',
+          data: dados.datasets[0].data,
+          backgroundColor: '#03459c',
+          borderColor: 'navy',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              faixaIdeal: {
+                type: 'box',
+                yMin: 40,
+                yMax: 70,
+                backgroundColor: 'rgba(0, 0, 128, 0.1)', // faixa azul clara
+                borderColor: 'navy',
+                borderWidth: 1,
+              },
+              limiteMin: {
+                type: 'line',
+                yMin: 40,
+                yMax: 40,
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Limite Mínimo',
+                  enabled: true,
+                  position: 'start'
+                }
+              },
+              limiteMax: {
+                type: 'line',
+                yMin: 70,
+                yMax: 70,
+                borderColor: 'red',
+                borderWidth: 2,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Limite Máximo',
+                  enabled: true,
+                  position: 'start'
+                }
+              }
             }
-          },
-          limiteMax: {
-            type: 'line',
-            yMin: 70,
-            yMax: 70,
-            borderColor: 'red',
-            borderWidth: 2,
-            borderDash: [6, 6],
-            label: {
-              content: 'Limite Máximo',
-              enabled: true,
-              position: 'start'
-            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false
           }
         }
       }
-    },
-    scales: {
-      y: {
-        beginAtZero: false
-      }
-    }
+    });
   }
-});
+
+
+ function buscarTemperaturaEmTempoReal() {
+  fetch(`/medidas/tempo-real/temperatura`, { cache: 'no-store' })
+    .then(response => response.json()) //Converte de json para o novoRegistro
+    .then(novoRegistro => { //Aqui você chama os dados que acabou de converter
+      const registro = novoRegistro[0];
+      const chart = window.myChart;
+
+      chart.data.labels.push(registro.horario);
+      chart.data.datasets[0].data.push(registro.temperatura);
+
+      // Quando o grafico chegar a 8 de registros ele apaga e passa pro proximo
+      if (chart.data.labels.length > 8) {
+        chart.data.labels.shift();
+        chart.data.datasets[0].data.shift();
+      }
+
+      // Funcionalidade da bibliteca chart JS, ele atualiza sozinho
+      chart.update();
+    })
+    .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
+}
+
+  function buscarUmidadeEmTempoReal(umidade, dados) {
+    fetch(`/medidas/tempo-real/umidade`, { cache: 'no-store' })
+      .then(response => response.json()) //Converte de json para o novoRegistro
+      .then(novoRegistro => { //Aqui você chama os dados que acabou de converter
+        const registro = novoRegistro[0];
+        const chart = window.myChart2;
+
+      chart.data.labels.push(registro.horario);
+      chart.data.datasets[0].data.push(registro.umidade);
+
+      // Quando o grafico chegar a 8 de registros ele apaga e passa pro proximo
+      if (chart.data.labels.length > 8) {
+        chart.data.labels.shift();
+        chart.data.datasets[0].data.shift();
+      }
+
+      // Funcionalidade da bibliteca chart JS, ele atualiza sozinho
+      chart.update();
+    })
+    .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
+  }
+
+
+
+
 
 </script>
