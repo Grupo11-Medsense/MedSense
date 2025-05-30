@@ -3,7 +3,7 @@ var medidaModel = require("../models/medidaModel");
 function buscarUltimasTemperaturas(req, res) {
 
     const limite_linhas = 8;
-     const fkSensor = 2;
+     const fkSensor = 1;
 
     console.log(`Recuperando as ultimas ${fkSensor, limite_linhas} medidas`);
 
@@ -23,7 +23,7 @@ function buscarUltimasTemperaturas(req, res) {
 function buscarUltimasUmidades(req, res) {
 
     const limite_linhas = 8;
-     const fkSensor = 2;
+     const fkSensor = 1;
 
     console.log(`Recuperando as ultimas ${fkSensor, limite_linhas} medidas`);
 
@@ -80,12 +80,12 @@ function buscarUmidadeEmTempoReal(req, res) {
     });
 }
 
-
+/*
 function inseriraleatorio(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var randTemperatura = req.body.randTemperatura;
     var randUmidade = req.body.randUmidade;
-    var fkSensor = 2;
+    var fkSensor = 1;
 
 
     // Faça as validações dos valores
@@ -119,7 +119,7 @@ function inseriraleatorio(req, res) {
             );
     }
 }
-
+*/
 
 
 
@@ -130,6 +130,6 @@ module.exports = {
     buscarUltimasUmidades,
     buscarTemperaturaEmTempoReal,
     buscarUmidadeEmTempoReal,
-    inseriraleatorio
+   // inseriraleatorio
 
 }

@@ -6,7 +6,7 @@ function buscarUltimasTemperaturas(limite_linhas) {
         temperatura as temperatura, 
         DATE_FORMAT(dtRegistro,'%H:%i:%s') as horario
                     FROM registro
-                    WHERE fkSensor = 2
+                    WHERE fkSensor = 1
                     ORDER BY idRegistro DESC LIMIT ${limite_linhas}`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -19,7 +19,7 @@ function buscarUltimasUmidades(limite_linhas) {
         umidade as umidade, 
         DATE_FORMAT(dtRegistro,'%H:%i:%s') as horario
                     FROM registro
-                    WHERE fkSensor = 2 
+                    WHERE fkSensor = 1
                     ORDER BY idRegistro DESC LIMIT ${limite_linhas}`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -34,7 +34,7 @@ function buscarTemperaturaEmTempoReal(fkSensor) {
         temperatura as temperatura, 
         DATE_FORMAT(dtRegistro,'%H:%i:%s') as horario,
         fkSensor 
-        FROM registro WHERE fkSensor = 2
+        FROM registro WHERE fkSensor = 1
         ORDER BY idRegistro DESC LIMIT 1`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -48,20 +48,20 @@ function buscarUmidadeEmTempoReal(fkSensor) {
         umidade as umidade, 
         DATE_FORMAT(dtRegistro,'%H:%i:%s') as horario,
         fkSensor 
-        FROM registro WHERE fkSensor = 2
+        FROM registro WHERE fkSensor = 1
         ORDER BY idRegistro DESC LIMIT 1`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
-
+/*
 function inseriraleatorio(randTemperatura, randUmidade, fkSensor) {
     var instrucaoSql = `INSERT INTO registro (temperatura, umidade, fkSensor) VALUES (${randTemperatura}, ${randUmidade}, ${fkSensor});`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-
+*/
 
 
 module.exports = {
@@ -69,5 +69,5 @@ module.exports = {
     buscarUltimasUmidades,
     buscarTemperaturaEmTempoReal,
     buscarUmidadeEmTempoReal,
-    inseriraleatorio
+   // inseriraleatorio
 }

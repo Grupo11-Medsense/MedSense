@@ -20,9 +20,9 @@ router.get("/tempo-real/umidade", function (req, res) {
 });
 
 
-
+/*
 router.post("/inseriraleatorio", function (req, res) {
     medidaController.inseriraleatorio(req, res);
 });
-
+*/
 module.exports = router;
