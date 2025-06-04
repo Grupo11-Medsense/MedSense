@@ -80,12 +80,66 @@ function buscarUmidadeEmTempoReal(req, res) {
     });
 }
 
-/*
+
+function buscarUltimoDesvio(req, res) {
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarUltimoDesvio().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function buscarDiasSemDesvio(req, res) {
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarDiasSemDesvio().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
+function buscarSetorComDesvio(req, res) {
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarSetorComDesvio().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
+
 function inseriraleatorio(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var randTemperatura = req.body.randTemperatura;
     var randUmidade = req.body.randUmidade;
-    var fkSensor = 1;
+    var fkSensor = 2;
 
 
     // Faça as validações dos valores
@@ -119,7 +173,7 @@ function inseriraleatorio(req, res) {
             );
     }
 }
-*/
+
 
 
 
@@ -130,6 +184,9 @@ module.exports = {
     buscarUltimasUmidades,
     buscarTemperaturaEmTempoReal,
     buscarUmidadeEmTempoReal,
-   // inseriraleatorio
+    inseriraleatorio,
+    buscarUltimoDesvio,
+    buscarDiasSemDesvio,
+    buscarSetorComDesvio
 
 }
