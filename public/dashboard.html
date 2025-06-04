@@ -109,7 +109,7 @@
     <h3 id="kpi_setor_ocorrencias"></h3>
   </div>
   <div class="indicador" style="background-color: rgb(11, 143, 11);">
-    <h3>Dias sem <br> anormalidades</h3>
+    <h3>Dias conformes <br> nos ultimos 30 dias</h3>
     <h1 id="kpi_conformidade"></h1>
   </div>
   <div class="indicador" style="background-color: rgb(133, 7, 7);">
@@ -155,6 +155,7 @@
     buscarUltimoDesvio();
     buscarDiasSemDesvio();
     buscarSetorComDesvio();
+    buscarAlertas();
     
 
 
@@ -169,7 +170,7 @@
   };
 
 
-
+ 
   function simularArduino() {
 
     var umidade = (Math.random() * 100).toFixed();
@@ -558,6 +559,29 @@
       });
   }
 
+
+
+
+  function buscarAlertas() {
+
+
+    fetch(`/medidas/buscarAlertas`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+      const ultimoRegistro = resposta[0]['Alertas por dia'];
+      document.getElementById("kpi_alertas_mes").textContent = 'Alertas:' + ultimoRegistro;
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
 
 
 

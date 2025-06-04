@@ -134,6 +134,30 @@ function buscarSetorComDesvio() {
 }
 
 
+ function buscarAlertas() {
+    var instrucaoSql = `SELECT 
+    DATE(dtRegistro) AS dia,
+    SUM(
+        CASE 
+            WHEN temperatura IS NULL OR umidade IS NULL THEN 1
+            WHEN temperatura NOT BETWEEN 2 AND 8 OR umidade NOT BETWEEN 40 AND 70 THEN 1
+            ELSE 0
+        END
+    ) AS 'Alertas por dia'
+FROM 
+    registro
+WHERE 
+    dtRegistro >= CURDATE() - INTERVAL 30 DAY
+GROUP BY 
+    DATE(dtRegistro)
+ORDER BY 
+    dia DESC
+LIMIT 1;
+    
+    `
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+ }
 
 
 
@@ -145,5 +169,6 @@ module.exports = {
     inseriraleatorio,
     buscarUltimoDesvio,
     buscarDiasSemDesvio,
-    buscarSetorComDesvio
+    buscarSetorComDesvio,
+    buscarAlertas
 }

@@ -135,6 +135,28 @@ function buscarSetorComDesvio(req, res) {
 
 
 
+
+
+
+function buscarAlertas(req, res) {
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.buscarAlertas().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+
+
 function inseriraleatorio(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var randTemperatura = req.body.randTemperatura;
@@ -187,6 +209,7 @@ module.exports = {
     inseriraleatorio,
     buscarUltimoDesvio,
     buscarDiasSemDesvio,
-    buscarSetorComDesvio
+    buscarSetorComDesvio,
+    buscarAlertas
 
 }

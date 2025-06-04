@@ -31,7 +31,9 @@ router.get("/buscarSetorComDesvio", function (req, res) {
     medidaController.buscarSetorComDesvio(req, res);
 })
 
-
+router.get("/buscarAlertas", function (req, res) {
+    medidaController.buscarAlertas(req, res);
+})
 
 
 router.post("/inseriraleatorio", function (req, res) {
