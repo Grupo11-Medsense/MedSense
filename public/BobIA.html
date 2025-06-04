@@ -1,24 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <title>BobIA</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bob.css">
 </head>
+
 <body>
 
-    <div id="container">
-        <h1>BobIA</h1>
-        <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
-        <br><br>
-        <button onclick="gerarResposta()">Gerar Resposta</button>
-        <h3>Resposta da IA:</h3>
-        <div id="resposta"></div>
+    <div class="geral">
+        <div class="sidebar">
+            <div class="img-logo"><img src="./assets/image/logo2.svg" alt=""></div>
+
+            <!-- depois colocar o nome do user realmente logado ok -->
+
+            <div class="nome-user">Thiago Prates</div>
+            <div class="suporte-jira"><button onclick="jira()">Jira</button></div>
+            <div class="logout">
+                <a href="./login.html">
+                    <img src="./assets/image/logout.svg" alt="">
+                    <h3>Sair</h3>
+                </a>
+                
+                
+            </div>
+        </div>
+
+        <div class="chatIA">
+            <div class="titulo">
+                <p class="tema" style="margin-bottom: -3vh;">Bob<span style="color:rgb(0, 0, 62);">IA</span></p>
+                <p class="desc">Inteligência Artificial de Suporte</p>
+            </div>
+
+            <div class="configs-ia">
+
+                <div class="caixa-texto">
+                    <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
+                </div>
+                <button onclick="gerarResposta()" class="btn_resposta">Gerar Resposta</button>
+                <div class="resposta">
+                    <h3>Resposta da IA:</h3>
+                    <div id="resposta"></div>
+
+                </div>
+
+            </div>
+        </div>
     </div>
 
+
     <script>
-        
+
         async function gerarResposta() {
             const pergunta = document.getElementById('pergunta').value;
 
@@ -37,6 +72,7 @@
         }
 
     </script>
-    
+
 </body>
+
 </html>

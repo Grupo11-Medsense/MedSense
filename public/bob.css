@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+#container {
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+h1 {
+    color: #1F2A44;
+}
+
+textarea[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    width: 800px;
+    height: 150px;
+    border: black 3px solid;
+    background-color: transparent;
+    font-family: 'Poppins';
+    outline: none;
+}
+
+select,
+button {
+    cursor: pointer;
+}
+
+button {
+    background-color: #fff;
+    color: navy;
+    border: none;
+    width: 70%;
+    margin-left: 7vh;
+    padding: 1vh;
+    font-size: larger;
+    border-radius: 30px;
+    margin-top: 2vh;
+    font-family: 'Poppins';
+     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    background-color: navy;
+    color: #fff;
+}
+
+#resposta {
+    margin-top: 20px;
+    border-radius: 5px;
+    text-align: left;
+    display: none;
+    color: rgb(199, 199, 199);
+}
+
+.geral {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 20%;
+    height: 100%;
+    background-color: rgb(0, 0, 62);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar img {
+    width: 100%;
+}
+
+.chatIA {
+    width: 80%;
+    height: 100%;
+}
+
+.titulo {
+    width: 100%;
+    margin-left: 5vh;
+    margin-top: -4vh;
+}
+
+.tema {
+    font-size: 60px;
+    font-weight: 700;
+}
+.desc{
+    font-size: larger;
+}
+
+.nome-user {
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    font-weight: 600;
+}
+
+.caixa-texto {
+    width: 100%; 
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resposta {
+    width: 60%;
+    height: 325px;
+    justify-self: center;
+    background-color: rgb(0, 0, 54);
+    border-radius: 20px;
+    padding-bottom: 1vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.resposta h3 {
+    text-align: center;
+    color: #fff;
+}
+
+.btn_resposta {
+    background-color: transparent;
+    border: 3px solid rgb(0, 0, 44);
+    width: 15%;
+    font-size: medium;
+    color: rgb(0, 0, 44);
+    margin-left: 35vh;
+    border-radius: 15px;
+   
+}
+
+.logout {
+    width: 100%;
+    height: 10%;
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    margin-top: 120%;
+    justify-content: space-evenly;
+    
+}
+
+.logout img {
+    height: 60%;
+    margin-top: 35%;
+}
+
+.logout a {
+    display: flex;
+    text-decoration: none;
+    color: white;
+}
