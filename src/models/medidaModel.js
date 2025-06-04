@@ -55,12 +55,31 @@ function buscarUmidadeEmTempoReal(fkSensor) {
     return database.executar(instrucaoSql);
 }
 
+
+
+
+
 function inseriraleatorio(randTemperatura, randUmidade, fkSensor) {
-    var instrucaoSql = `INSERT INTO registro (temperatura, umidade, fkSensor) VALUES (${randTemperatura}, ${randUmidade}, ${fkSensor});`;
+
+    let instrucaoSql = "";
+
+    if (randTemperatura < 2 || randTemperatura > 8 || randUmidade < 40 || randUmidade > 70) {
+        instrucaoSql = `
+            INSERT INTO alerta (temperatura, umidade, fkSensor) 
+            VALUES (${randTemperatura}, ${randUmidade}, ${fkSensor});
+        `;
+        console.log("Inserindo na tabela ALERTA");
+    }
+    
+        instrucaoSql = `
+            INSERT INTO registro (temperatura, umidade, fkSensor) 
+            VALUES (${randTemperatura}, ${randUmidade}, ${fkSensor});
+        `;
+        console.log("Inserindo na tabela REGISTRO");
+    
+
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
-
-    
 }
 
 
@@ -136,6 +155,27 @@ function buscarSetorComDesvio() {
 
  function buscarAlertas() {
     var instrucaoSql = `SELECT 
+            DATE(dtRegistro) AS dia,
+            COUNT(*) AS total_alertas
+        FROM 
+            alerta
+        WHERE 
+            dtRegistro >= CURDATE() - INTERVAL 30 DAY
+        GROUP BY 
+            DATE(dtRegistro) limit 1;
+    
+    `
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+ }
+
+
+
+
+
+
+ function buscarAlertas() {
+    var instrucaoSql = `SELECT 
     DATE(dtRegistro) AS dia,
     SUM(
         CASE 
@@ -158,7 +198,6 @@ LIMIT 1;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
  }
-
 
 
 module.exports = {

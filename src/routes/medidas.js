@@ -40,4 +40,9 @@ router.post("/inseriraleatorio", function (req, res) {
     medidaController.inseriraleatorio(req, res);
 });
 
+
+router.post("/enviarObs", function (req, res) {
+    medidaController.enviarObs(req, res);
+});
+
 module.exports = router;
