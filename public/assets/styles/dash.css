@@ -366,3 +366,9 @@ ul {
       gap: 0.5rem;
     }
   }
+
+
+
+  canvas.hidden {
+  visibility: hidden;
+}

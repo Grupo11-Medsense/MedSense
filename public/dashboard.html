@@ -74,11 +74,11 @@
 
     <div class="infos1">
       <h3>Número da geladeira:
-        <select name="" id=""
+        <select name="" id="geladeira"
           style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
-          <option value="01">01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
         </select>
       </h3>
 
@@ -100,23 +100,23 @@
     </div>
 
     <div class="kpis">
-  <div class="indicador" style="background-color: navy;">
-    <h3>Ultimo registro <br> fora do conforme </h3>
-    <h1 id="kpi_temp_media"></h1>
-  </div>
-  <div class="indicador" style="background-color: navy;">
-    <h3>Setor com <br> mais ocorrências </h3>
-    <h3 id="kpi_setor_ocorrencias"></h3>
-  </div>
-  <div class="indicador" style="background-color: rgb(11, 143, 11);">
-    <h3>Dias conformes <br> nos ultimos 30 dias</h3>
-    <h1 id="kpi_conformidade"></h1>
-  </div>
-  <div class="indicador" style="background-color: rgb(133, 7, 7);">
-    <h3>Alertas emitidos <br> esse mês</h3>
-    <h1 id="kpi_alertas_mes"></h1>
-  </div>
-</div>
+      <div class="indicador" style="background-color: navy;">
+        <h3>Ultimo registro <br> fora do conforme </h3>
+        <h1 id="kpi_temp_media"></h1>
+      </div>
+      <div class="indicador" style="background-color: navy;">
+        <h3>Setor com <br> mais ocorrências </h3>
+        <h3 id="kpi_setor_ocorrencias"></h3>
+      </div>
+      <div class="indicador" style="background-color: rgb(11, 143, 11);">
+        <h3>Dias sem alertas <br> (últimos 30 dias)</h3>
+        <h1 id="kpi_conformidade"></h1>
+      </div>
+      <div class="indicador" style="background-color: rgb(133, 7, 7);">
+        <h3>Alertas emitidos <br> esse mês</h3>
+        <h1 id="kpi_alertas_mes"></h1>
+      </div>
+    </div>
 
     <!-- gráficos  -->
 
@@ -125,7 +125,10 @@
       <div class="graficoTemp">
         <h2>Captura de Temperatura</h2>
         <div>
-          <canvas id="myChart"></canvas>
+          <canvas id="myChart" ></canvas>
+          <canvas id="myChart3"></canvas>
+          <canvas id="myChart5"></canvas>
+
         </div>
       </div>
 
@@ -133,6 +136,8 @@
         <h2>Captura de Umidade</h2>
         <div>
           <canvas id="myChart2"></canvas>
+          <canvas id="myChart4"></canvas>
+          <canvas id="myChart6"></canvas>
         </div>
       </div>
 
@@ -143,35 +148,130 @@
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0"></script>
 <script>
-  const ctx = document.getElementById('myChart');
-  const ctx2 = document.getElementById('myChart2');
+  var ctx;
+  var ctx2; 
 
 
   let proximaAtualizacao;
 
+
   window.onload = () => {
-    obterDadosGrafico(1);
-    obterDadosGrafico2(2);
-    buscarUltimoDesvio();
-    buscarDiasSemDesvio();
-    buscarSetorComDesvio();
-    buscarAlertas();
+
+  ctx = document.getElementById('myChart');
+  ctx2 = document.getElementById('myChart2');
+  ctx3 = document.getElementById('myChart3');
+  ctx4 = document.getElementById('myChart4');
+  ctx5 = document.getElementById('myChart5');
+  ctx6 = document.getElementById('myChart6');
+
+  const selecionarGeladeira = document.getElementById('geladeira');
+  let geladeiraAtual = selecionarGeladeira.value;
+  let intervaloAtualizacao;
+
+  function carregarDadosGeladeira(geladeira) {
+    if (intervaloAtualizacao) clearInterval(intervaloAtualizacao);
     
+    document.querySelectorAll('canvas').forEach(canvas => {
+      canvas.style.display = 'none';
+    });
 
+    if (geladeira == 1) {
+      document.getElementById('myChart').style.display = 'block';
+      document.getElementById('myChart2').style.display = 'block';
+      obterDadosGrafico(geladeira);
+      obterDadosGrafico2(geladeira);
+    } else if (geladeira == 2) {
+      document.getElementById('myChart3').style.display = 'block';
+      document.getElementById('myChart4').style.display = 'block';
+      obterDadosGrafico3(geladeira);
+      obterDadosGrafico4(geladeira);
+    } else if (geladeira == 3) {
+      document.getElementById('myChart5').style.display = 'block';
+      document.getElementById('myChart6').style.display = 'block';
+      obterDadosGrafico5(geladeira);
+      obterDadosGrafico6(geladeira);
+    }
 
-    setInterval(() => {
-      simularArduino()
+    atualizarKPIs(geladeira);
+    
+      intervaloAtualizacao = setInterval(() => {
+      simularDadosArduino(geladeira);
+      atualizarTempoReal(geladeira);
+      atualizarKPIs(geladeira);
+    }, 5000);
+  }
+
+  // atualizar dados em tempo real
+  function atualizarTempoReal(geladeira) {
+    if (geladeira == 1) {
       buscarTemperaturaEmTempoReal();
       buscarUmidadeEmTempoReal();
+    } else if (geladeira == 2) {
+      buscarTemperaturaEmTempoReal2();
+      buscarUmidadeEmTempoReal2();
+    } else if (geladeira == 3) {
+      buscarTemperaturaEmTempoReal3();
+      buscarUmidadeEmTempoReal3();
+    }
+  }
+
+  function atualizarKPIs(geladeira) {
+    if (geladeira == 1) {
       buscarUltimoDesvio();
-    buscarDiasSemDesvio();
-    buscarSetorComDesvio();
-    buscarAlertas();
-    }, 5000);
-  };
+      buscarDiasSemDesvio();
+      buscarSetorComDesvio();
+      buscarAlertas();
+    } else if (geladeira == 2) {
+      buscarUltimoDesvio2();
+      buscarDiasSemDesvio2();
+      buscarSetorComDesvio2();
+      buscarAlertas2();
+    } else if (geladeira == 3) {
+      buscarUltimoDesvio3();
+      buscarDiasSemDesvio3();
+      buscarSetorComDesvio3();
+      buscarAlertas3();
+    }
+  }
+
+  function simularDadosArduino(geladeira) {
+    if (geladeira == 1) {
+      simularArduino();
+    } else if (geladeira == 2) {
+      simularArduino2();
+    } else if (geladeira == 3) {
+      simularArduino3();
+    }
+  }
+
+  selecionarGeladeira.addEventListener('change', () => {
+    geladeiraAtual = selecionarGeladeira.value;
+    carregarDadosGeladeira(geladeiraAtual);
+  });
+
+  carregarDadosGeladeira(geladeiraAtual);
+};
 
 
- 
+
+
+
+  const selecionarGeladeira = document.getElementById('geladeira');
+
+  function simularBaseadoNoSelect() {
+    const geladeira = selecionarGeladeira.value;
+
+    if (geladeira == '1') {
+      simularArduino();
+    } else if (geladeira == '2') {
+      simularArduino2();
+    } else if (geladeira == '3') {
+      simularArduino3();
+    }
+  }
+
+
+
   function simularArduino() {
 
     var umidade = (Math.random() * 100).toFixed();
@@ -208,13 +308,152 @@
 
       });
 
+  }
+
+
+
+  function simularArduino2() {
+
+    var umidade = (Math.random() * 100).toFixed();
+    var temperatura = (Math.random() * 10).toFixed(1);
+    console.log(umidade, temperatura);
+
+
+
+    fetch("/medidas/inseriraleatorio2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+
+        randTemperatura: temperatura,
+        randUmidade: umidade,
+        fkSensorServer: 2
+
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          console.log("Resposta ok");
+        } else {
+          throw "deu ruim na resposta!";
+          alert("deu ruim na resposta!");
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+
+      });
+
 
 
 
   }
 
 
-  
+
+  function simularArduino3() {
+
+    var umidade = (Math.random() * 100).toFixed();
+    var temperatura = (Math.random() * 10).toFixed(1);
+    console.log(umidade, temperatura);
+
+
+
+    fetch("/medidas/inseriraleatorio3", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+
+        randTemperatura: temperatura,
+        randUmidade: umidade,
+        fkSensorServer: 2
+
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          console.log("Resposta ok");
+        } else {
+          throw "deu ruim na resposta!";
+          alert("deu ruim na resposta!");
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+
+      });
+
+
+
+
+  }
+
+
+
+let myChart = null;
+let myChart2 = null;
+let myChart3 = null;
+let myChart4 = null;
+let myChart5 = null
+let myChart6 = null
+
+function destroyChart(chartInstance) {
+    if (chartInstance && typeof chartInstance.destroy == 'function') {
+        chartInstance.destroy();
+    }
+    return null;
+}
+
+   function trocarGrafico(geladeira) {
+    console.log(`Trocando para geladeira ${geladeira}`);
+    
+    myChart = destroyChart(myChart);
+    myChart2 = destroyChart(myChart2);
+    myChart3 = destroyChart(myChart3);
+    myChart4 = destroyChart(myChart4);
+    myChart5 = destroyChart(myChart5)
+    myChart6 = destroyChart(myChart6)
+    
+    document.querySelectorAll('canvas').forEach(canvas => {
+        canvas.style.display = 'none';
+    });
+
+    if (geladeira == 1) {
+
+        document.getElementById('myChart').style.display = 'block';
+        document.getElementById('myChart2').style.display = 'block';
+                
+        obterDadosGrafico(1);    
+        obterDadosGrafico2(1);   
+        
+    } else if (geladeira == 2) {
+
+        document.getElementById('myChart3').style.display = 'block';
+        document.getElementById('myChart4').style.display = 'block';
+                
+        obterDadosGrafico3(2);   
+        obterDadosGrafico4(2);   
+    }
+      else if (geladeira == 3) {
+
+        document.getElementById('myChart5').style.display = 'block';
+        document.getElementById('myChart6').style.display = 'block';
+                
+        obterDadosGrafico5(3);   
+        obterDadosGrafico6(3);   
+    }
+}
+
+
+
 
 
 
@@ -223,10 +462,12 @@
 
   function obterDadosGrafico(temperatura) {
 
-
     fetch(`/medidas/ultimas/temperatura`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
+
+          
+
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
@@ -243,8 +484,10 @@
   }
 
 
+
   function plotarctx(resposta) {
     console.log('iniciando plotagem do gráfico...');
+
 
     var dados = {
       labels: [],
@@ -264,6 +507,10 @@
       dados.labels.push(registro.horario);
       dados.datasets[0].data.push(registro['temperatura']);
     }
+  
+    myChart = destroyChart(myChart);
+
+    
 
     window.myChart = new Chart(ctx, {
       type: 'line',
@@ -326,14 +573,18 @@
         }
       }
     });
+
+    
   }
 
   function obterDadosGrafico2(umidade) {
 
-
     fetch(`/medidas/ultimas/umidade`, { cache: 'no-store' }).then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
+
+          
+
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
           resposta.reverse();
 
@@ -353,6 +604,8 @@
   function plotarctx2(resposta) {
     console.log('iniciando plotagem do gráfico...');
 
+
+    
     var dados = {
       labels: [],
       datasets: [
@@ -372,7 +625,8 @@
       dados.datasets[0].data.push(registro['umidade']);
     }
 
-    const ctx2 = document.getElementById('myChart2');
+    
+    myChart = destroyChart(myChart2);
 
     window.myChart2 = new Chart(ctx2, {
       type: 'line',
@@ -489,23 +743,24 @@
 
 
 
-  
+
   function buscarUltimoDesvio() {
 
+    
+    fetch(`/medidas/buscarUltimoDesvio`)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-    fetch(`/medidas/buscarUltimoDesvio`, { cache: 'no-store' }).then(function (response) {
-      if (response.ok) {
-        response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            const ultimoRegistro = resposta[0]['Ultimo registro fora do conforme'];
+            document.getElementById("kpi_temp_media").textContent = ultimoRegistro;
 
-      const ultimoRegistro = resposta[0]['Ultimo registro fora do conforme'];
-      document.getElementById("kpi_temp_media").textContent = ultimoRegistro;
-
-        });
-      } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-      }
-    })
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
       .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
@@ -515,21 +770,21 @@
 
   function buscarDiasSemDesvio() {
 
+    fetch(`/medidas//buscarDiasSemDesvio`)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-    fetch(`/medidas/buscarDiasSemDesvio`, { cache: 'no-store' }).then(function (response) {
-      if (response.ok) {
-        response.json().then(function (resposta) {
-          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            const diasSemAnormalidades = resposta[0]["Dias sem anormalidades"];
+            document.getElementById("kpi_conformidade").textContent = diasSemAnormalidades + " dias";
 
-      const diasSemAnormalidades = resposta[0]["Dias sem anormalidades"];
-      document.getElementById("kpi_conformidade").textContent = diasSemAnormalidades + " dias";
-
-        });
-      } else {
-        console.error('Nenhum dado encontrado ou erro na API');
-      }
-    })
-      .catch(function (error) { 
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
+      .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
   }
@@ -539,14 +794,14 @@
 
   function buscarSetorComDesvio() {
 
-
-    fetch(`/medidas/buscarSetorComDesvio`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/medidas//buscarSetorComDesvio`)
+    .then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidossssssssss: ${JSON.stringify(resposta)}`);
 
-       const setor = resposta[0].setor; 
-       document.getElementById("kpi_setor_ocorrencias").textContent = "Setor: " + setor;
+          const setor = resposta[0].setor;
+          document.getElementById("kpi_setor_ocorrencias").textContent = "Setor: " + setor;
 
         });
       } else {
@@ -563,14 +818,15 @@
 
   function buscarAlertas() {
 
-
-    fetch(`/medidas/buscarAlertas`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/medidas//buscarAlertas`)
+    .then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
 
-      const ultimoRegistro = resposta[0]['Alertas por dia'];
-      document.getElementById("kpi_alertas_mes").textContent = 'Alertas:' + ultimoRegistro;
+           const totalAlertas = resposta[0].total_alertas;
+        console.log(`Total de alertas: ${totalAlertas}`);
+        document.getElementById('kpi_alertas_mes').textContent = `Alertas: ${totalAlertas}`;
 
         });
       } else {
@@ -584,4 +840,803 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function obterDadosGrafico3(temperatura) {
+
+    fetch(`/medidas/ultimas/temperatura2`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+
+          
+
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+
+          plotarctx3(resposta);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+  function plotarctx3(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+
+    var dados = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Temperatura',
+          borderColor: '#32B9CD',
+          data: []
+        }
+      ]
+    };
+
+
+
+    for (i = resposta.length - 1; i >= 0; i--) {
+      var registro = resposta[i];
+      dados.labels.push(registro.horario);
+      dados.datasets[0].data.push(registro['temperatura']);
+    }
+
+    myChart = destroyChart(myChart3);
+
+
+    window.myChart3 = new Chart(ctx3, {
+      type: 'line',
+      data: {
+        labels: dados.labels,
+        datasets: [{
+          label: 'Temperatura',
+          data: dados.datasets[0].data,
+          backgroundColor: 'navy',
+          borderColor: 'navy',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              faixaIdeal: {
+                type: 'box',
+                yMin: 2,
+                yMax: 8,
+                backgroundColor: 'rgba(0, 0, 128, 0.1)',
+                borderColor: 'navy',
+                borderWidth: 1,
+              },
+              limiteMin: {
+                type: 'line',
+                yMin: 2,
+                yMax: 2,
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Mínimo (2°C)',
+                  enabled: true,
+                  position: 'start'
+                }
+              },
+              limiteMax: {
+                type: 'line',
+                yMin: 8,
+                yMax: 8,
+                borderColor: 'red',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Máximo (8°C)',
+                  enabled: true,
+                  position: 'start'
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+
+    
+  }
+
+  function obterDadosGrafico4(umidade) {
+
+    fetch(`/medidas/ultimas/umidade2`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+
+          plotarctx4(resposta);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+  function plotarctx4(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+    
+
+    var dados = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Umidade',
+          borderColor: '#32B9CD',
+          data: []
+        }
+      ]
+    };
+
+
+
+    for (i = resposta.length - 1; i >= 0; i--) {
+      var registro = resposta[i];
+      dados.labels.push(registro.horario);
+      dados.datasets[0].data.push(registro['umidade']);
+    }
+
+    const ctx4 = document.getElementById('myChart4');
+
+    myChart = destroyChart(myChart4);
+
+
+    window.myChart4 = new Chart(ctx4, {
+      type: 'line',
+      data: {
+        labels: dados.labels,
+        datasets: [{
+          label: 'Umidade',
+          data: dados.datasets[0].data,
+          backgroundColor: '#03459c',
+          borderColor: 'navy',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              faixaIdeal: {
+                type: 'box',
+                yMin: 40,
+                yMax: 70,
+                backgroundColor: 'rgba(0, 0, 128, 0.1)', // faixa azul clara
+                borderColor: 'navy',
+                borderWidth: 1,
+              },
+              limiteMin: {
+                type: 'line',
+                yMin: 40,
+                yMax: 40,
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Limite Mínimo',
+                  enabled: true,
+                  position: 'start'
+                }
+              },
+              limiteMax: {
+                type: 'line',
+                yMin: 70,
+                yMax: 70,
+                borderColor: 'red',
+                borderWidth: 2,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Limite Máximo',
+                  enabled: true,
+                  position: 'start'
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+  }
+
+
+  function buscarTemperaturaEmTempoReal2() {
+    fetch(`/medidas/tempo-real/temperatura2`, { cache: 'no-store' })
+      .then(response => response.json()) 
+      .then(novoRegistro => { 
+        const registro = novoRegistro[0];
+            const chart = window.myChart3; 
+
+        chart.data.labels.push(registro.horario);
+        chart.data.datasets[0].data.push(registro.temperatura);
+
+        if (chart.data.labels.length > 8) {
+          chart.data.labels.shift();
+          chart.data.datasets[0].data.shift();
+        }
+
+        chart.update();
+      })
+      .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
+  }
+
+  function buscarUmidadeEmTempoReal2() {
+    fetch(`/medidas/tempo-real/umidade2`, { cache: 'no-store' })
+      .then(response => response.json()) 
+      .then(novoRegistro => { 
+        const registro = novoRegistro[0];
+        const chart = window.myChart4; 
+
+
+        chart.data.labels.push(registro.horario);
+        chart.data.datasets[0].data.push(registro.umidade);
+
+        if (chart.data.labels.length > 8) {
+          chart.data.labels.shift();
+          chart.data.datasets[0].data.shift();
+        }
+
+        chart.update();
+      })
+      .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
+  }
+
+
+
+
+
+
+
+
+
+  function buscarUltimoDesvio2() {
+
+    
+    fetch(`/medidas/buscarUltimoDesvio2`)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+            const ultimoRegistro = resposta[0]['Ultimo registro fora do conforme'];
+            document.getElementById("kpi_temp_media").textContent = ultimoRegistro;
+
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
+  function buscarDiasSemDesvio2() {
+
+    fetch(`/medidas//buscarDiasSemDesvio2`)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+            const diasSemAnormalidades = resposta[0]["Dias sem anormalidades"];
+            document.getElementById("kpi_conformidade").textContent = diasSemAnormalidades + " dias";
+
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
+
+  function buscarSetorComDesvio2() {
+
+    fetch(`/medidas//buscarSetorComDesvio2`)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidossssssssss: ${JSON.stringify(resposta)}`);
+
+          const setor = resposta[0].setor;
+          document.getElementById("kpi_setor_ocorrencias").textContent = "Setor: " + setor;
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
+
+  function buscarAlertas2() {
+
+    fetch(`/medidas//buscarAlertas2`)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+           const totalAlertas = resposta[0].total_alertas;
+        console.log(`Total de alertas: ${totalAlertas}`);
+        document.getElementById('kpi_alertas_mes').textContent = `Alertas: ${totalAlertas}`;
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function obterDadosGrafico5(temperatura) {
+
+    fetch(`/medidas/ultimas/temperatura3`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+
+          
+
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+
+          plotarctx5(resposta);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+  function plotarctx5(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+
+    var dados = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Temperatura',
+          borderColor: '#32B9CD',
+          data: []
+        }
+      ]
+    };
+
+
+
+    for (i = resposta.length - 1; i >= 0; i--) {
+      var registro = resposta[i];
+      dados.labels.push(registro.horario);
+      dados.datasets[0].data.push(registro['temperatura']);
+    }
+
+    myChart = destroyChart(myChart5);
+
+
+    window.myChart5 = new Chart(ctx5, {
+      type: 'line',
+      data: {
+        labels: dados.labels,
+        datasets: [{
+          label: 'Temperatura',
+          data: dados.datasets[0].data,
+          backgroundColor: 'navy',
+          borderColor: 'navy',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              faixaIdeal: {
+                type: 'box',
+                yMin: 2,
+                yMax: 8,
+                backgroundColor: 'rgba(0, 0, 128, 0.1)',
+                borderColor: 'navy',
+                borderWidth: 1,
+              },
+              limiteMin: {
+                type: 'line',
+                yMin: 2,
+                yMax: 2,
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Mínimo (2°C)',
+                  enabled: true,
+                  position: 'start'
+                }
+              },
+              limiteMax: {
+                type: 'line',
+                yMin: 8,
+                yMax: 8,
+                borderColor: 'red',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Máximo (8°C)',
+                  enabled: true,
+                  position: 'start'
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+
+    
+  }
+
+  function obterDadosGrafico6(umidade) {
+
+    fetch(`/medidas/ultimas/umidade3`, { cache: 'no-store' }).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          resposta.reverse();
+
+          plotarctx6(resposta);
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+  function plotarctx6(resposta) {
+    console.log('iniciando plotagem do gráfico...');
+
+    
+
+    var dados = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Umidade',
+          borderColor: '#32B9CD',
+          data: []
+        }
+      ]
+    };
+
+
+
+    for (i = resposta.length - 1; i >= 0; i--) {
+      var registro = resposta[i];
+      dados.labels.push(registro.horario);
+      dados.datasets[0].data.push(registro['umidade']);
+    }
+
+    const ctx6 = document.getElementById('myChart6');
+
+    myChart = destroyChart(myChart6);
+
+
+    window.myChart6 = new Chart(ctx6, {
+      type: 'line',
+      data: {
+        labels: dados.labels,
+        datasets: [{
+          label: 'Umidade',
+          data: dados.datasets[0].data,
+          backgroundColor: '#03459c',
+          borderColor: 'navy',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          annotation: {
+            annotations: {
+              faixaIdeal: {
+                type: 'box',
+                yMin: 40,
+                yMax: 70,
+                backgroundColor: 'rgba(0, 0, 128, 0.1)', // faixa azul clara
+                borderColor: 'navy',
+                borderWidth: 1,
+              },
+              limiteMin: {
+                type: 'line',
+                yMin: 40,
+                yMax: 40,
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Limite Mínimo',
+                  enabled: true,
+                  position: 'start'
+                }
+              },
+              limiteMax: {
+                type: 'line',
+                yMin: 70,
+                yMax: 70,
+                borderColor: 'red',
+                borderWidth: 2,
+                borderDash: [6, 6],
+                label: {
+                  content: 'Limite Máximo',
+                  enabled: true,
+                  position: 'start'
+                }
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        }
+      }
+    });
+  }
+
+
+  function buscarTemperaturaEmTempoReal3() {
+    fetch(`/medidas/tempo-real/temperatura3`, { cache: 'no-store' })
+      .then(response => response.json()) 
+      .then(novoRegistro => { 
+        const registro = novoRegistro[0];
+            const chart = window.myChart5; 
+
+        chart.data.labels.push(registro.horario);
+        chart.data.datasets[0].data.push(registro.temperatura);
+
+        if (chart.data.labels.length > 8) {
+          chart.data.labels.shift();
+          chart.data.datasets[0].data.shift();
+        }
+
+        chart.update();
+      })
+      .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
+  }
+
+  function buscarUmidadeEmTempoReal3() {
+    fetch(`/medidas/tempo-real/umidade3`, { cache: 'no-store' })
+      .then(response => response.json()) 
+      .then(novoRegistro => { 
+        const registro = novoRegistro[0];
+        const chart = window.myChart6; 
+
+
+        chart.data.labels.push(registro.horario);
+        chart.data.datasets[0].data.push(registro.umidade);
+
+        if (chart.data.labels.length > 8) {
+          chart.data.labels.shift();
+          chart.data.datasets[0].data.shift();
+        }
+
+        chart.update();
+      })
+      .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
+  }
+
+
+
+
+
+
+
+
+
+  function buscarUltimoDesvio3() {
+
+    
+    fetch(`/medidas/buscarUltimoDesvio3`)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+            const ultimoRegistro = resposta[0]['Ultimo registro fora do conforme'];
+            document.getElementById("kpi_temp_media").textContent = ultimoRegistro;
+
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
+  function buscarDiasSemDesvio3() {
+
+    fetch(`/medidas//buscarDiasSemDesvio3`)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+            const diasSemAnormalidades = resposta[0]["Dias sem anormalidades"];
+            document.getElementById("kpi_conformidade").textContent = diasSemAnormalidades + " dias";
+
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
+
+  function buscarSetorComDesvio3() {
+
+    fetch(`/medidas//buscarSetorComDesvio3`)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidossssssssss: ${JSON.stringify(resposta)}`);
+
+          const setor = resposta[0].setor;
+          document.getElementById("kpi_setor_ocorrencias").textContent = "Setor: " + setor;
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
+
+
+
+
+  function buscarAlertas3() {
+
+    fetch(`/medidas//buscarAlertas3`)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+           const totalAlertas = resposta[0].total_alertas;
+        console.log(`Total de alertas: ${totalAlertas}`);
+        document.getElementById('kpi_alertas_mes').textContent = `Alertas: ${totalAlertas}`;
+
+        });
+      } else {
+        console.error('Nenhum dado encontrado ou erro na API');
+      }
+    })
+      .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+      });
+  }
 </script>
