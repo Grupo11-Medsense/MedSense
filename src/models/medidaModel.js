@@ -192,21 +192,14 @@ FROM (
 function buscarSetorComDesvio2() {
     var instrucaoSql = `
         SELECT 
-    s.setor AS setor
+    s.setor
 FROM 
-    registro r
-JOIN 
-    sensor se ON r.fkSensor = se.idSensor
-JOIN 
-    geladeira g ON se.fkGeladeira = g.idGeladeira
-JOIN 
-    setor s ON g.fkSetor = s.idSetor
-WHERE 
-    (r.temperatura NOT BETWEEN 2 AND 8
-    OR r.umidade NOT BETWEEN 40 AND 70)
-    AND r.fkSensor = 5
+    alerta a
+JOIN sensor se ON a.fkSensor = se.idSensor
+JOIN geladeira g ON se.fkGeladeira = g.idGeladeira
+JOIN setor s ON g.fkSetor = s.idSetor
 GROUP BY 
-    s.idSetor 
+    s.idSetor
 ORDER BY 
     COUNT(*) DESC
 LIMIT 1;
@@ -362,21 +355,14 @@ FROM (
 function buscarSetorComDesvio3() {
     var instrucaoSql = `
         SELECT 
-    s.setor AS setor
+    s.setor
 FROM 
-    registro r
-JOIN 
-    sensor se ON r.fkSensor = se.idSensor
-JOIN 
-    geladeira g ON se.fkGeladeira = g.idGeladeira
-JOIN 
-    setor s ON g.fkSetor = s.idSetor
-WHERE 
-    (r.temperatura NOT BETWEEN 2 AND 8
-    OR r.umidade NOT BETWEEN 40 AND 70)
-    AND r.fkSensor = 6
+    alerta a
+JOIN sensor se ON a.fkSensor = se.idSensor
+JOIN geladeira g ON se.fkGeladeira = g.idGeladeira
+JOIN setor s ON g.fkSetor = s.idSetor
 GROUP BY 
-    s.idSetor 
+    s.idSetor
 ORDER BY 
     COUNT(*) DESC
 LIMIT 1;
@@ -537,21 +523,14 @@ FROM (
 function buscarSetorComDesvio() {
     var instrucaoSql = `
         SELECT 
-    s.setor AS setor
+    s.setor
 FROM 
-    registro r
-JOIN 
-    sensor se ON r.fkSensor = se.idSensor
-JOIN 
-    geladeira g ON se.fkGeladeira = g.idGeladeira
-JOIN 
-    setor s ON g.fkSetor = s.idSetor
-WHERE 
-    (r.temperatura NOT BETWEEN 2 AND 8
-    OR r.umidade NOT BETWEEN 40 AND 70)
-    AND r.fkSensor = 2
+    alerta a
+JOIN sensor se ON a.fkSensor = se.idSensor
+JOIN geladeira g ON se.fkGeladeira = g.idGeladeira
+JOIN setor s ON g.fkSetor = s.idSetor
 GROUP BY 
-    s.idSetor 
+    s.idSetor
 ORDER BY 
     COUNT(*) DESC
 LIMIT 1;
@@ -581,6 +560,17 @@ LIMIT 1;
 
 
 
+     function inserirDadosArduino(req, res) {
+    try {
+        arduinoController.readData( (temperatura, umidade) => {
+             arduinoController.insertData(temperatura, umidade, 1);
+            res.status(200).json({ temperatura, umidade });
+        });
+    } catch (error) {
+        console.error('Erro na rota do Arduino:', error);
+        res.status(500).json({ error: error.message });
+    }
+}
 
 
 
@@ -612,5 +602,6 @@ module.exports = {
     buscarUltimoDesvio3,
     buscarDiasSemDesvio3,
     buscarSetorComDesvio3,
-    buscarAlertas3
+    buscarAlertas3,
+    inserirDadosArduino
 }
