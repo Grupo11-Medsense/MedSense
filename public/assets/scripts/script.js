@@ -299,16 +299,14 @@ function calcular() {
     var ax_loteporMes = Number(ipt_loteMes.value);
     var ax_risco = ipt_risco.value;
 
-    // VERIFICAÇÂO DE ENTRADAS
+    // VERIFICAÇÃO DE ENTRADAS
     if (
         (ax_tamanho != 'pequeno' && ax_tamanho != 'médio' && ax_tamanho != 'grande') ||
         (ax_risco != 'muito baixo' && ax_risco != 'baixo' && ax_risco != 'médio' && ax_risco != 'alto' && ax_risco != 'muito alto')
     ) {
         alert('Entradas inválidas! Corrija e tente novamente')
     }
-    //
-
-    // CÁCULO PROPIAMENTE DITO
+    // CÁLCULO PROPRIAMENTE DITO
     else {
         // ATRIBUINDO CUSTO DE MONITORAMENTO E INTERVALO DE PERDA DE LOTE POR TAMANHO DA EMPRESA
         if (ax_tamanho == 'pequeno') {
@@ -323,9 +321,8 @@ function calcular() {
             var custoMonitoramento = 15000;
             var mesPerdeLote = 1
         }
-        //
 
-        // ATRIBUINDO DO CUSTO DA MULTA EM MILHÃO E TEMPO DE PARADA DA INTERDIÇÃO
+        // ATRIBUINDO CUSTO DA MULTA EM MILHÃO E TEMPO DE PARADA DA INTERDIÇÃO
         var multaTotal = 0;
         if (ax_risco == 'muito baixo') {
             var custoMulta = 0.5;
@@ -348,12 +345,67 @@ function calcular() {
             var custoInterdicao = (ax_custoLote * ax_loteporMes * 3) / 1000000
         }
         multaTotal = custoMulta + custoInterdicao;
-        //
+
         // CÁLCULO DA PERDA DO LOTE
         var perdaLote = ax_custoLote * (12 / mesPerdeLote);
         var ganhoMonitoramento = (multaTotal * 1000000) + perdaLote - custoMonitoramento;
-        //
-        // EXIBIR OS CÁLCULOS
+
+        // FORMATAÇÃO DOS VALORES
+        var perdaFormatada, multaFormatada, perdaTotalFormatada, custoFormatado, ganhoFormatado;
+        
+        if (perdaLote >= 1000000000) {
+            perdaFormatada = `R$${(perdaLote / 1000000000).toFixed(3)} bilhões`;
+        } else if (perdaLote >= 1000000) {
+            perdaFormatada = `R$${(perdaLote / 1000000).toFixed(3)} milhões`;
+        } else if (perdaLote >= 1000) {
+            perdaFormatada = `R$${(perdaLote / 1000).toFixed(3)} mil`;
+        } else {
+            perdaFormatada = `R$${perdaLote.toFixed(2)}`;
+        }
+        
+        var multaValor = multaTotal * 1000000;
+        if (multaValor >= 1000000000) {
+            multaFormatada = `R$${(multaValor / 1000000000).toFixed(3)} bilhões`;
+        } else if (multaValor >= 1000000) {
+            multaFormatada = `R$${(multaValor / 1000000).toFixed(3)} milhões`;
+        } else if (multaValor >= 1000) {
+            multaFormatada = `R$${(multaValor / 1000).toFixed(3)} mil`;
+        } else {
+            multaFormatada = `R$${multaValor.toFixed(2)}`;
+        }
+        
+        var perdaTotalValor = multaValor + perdaLote;
+        if (perdaTotalValor >= 1000000000) {
+            perdaTotalFormatada = `R$${(perdaTotalValor / 1000000000).toFixed(3)} bilhões`;
+        } else if (perdaTotalValor >= 1000000) {
+            perdaTotalFormatada = `R$${(perdaTotalValor / 1000000).toFixed(3)} milhões`;
+        } else if (perdaTotalValor >= 1000) {
+            perdaTotalFormatada = `R$${(perdaTotalValor / 1000).toFixed(3)} mil`;
+        } else {
+            perdaTotalFormatada = `R$${perdaTotalValor.toFixed(2)}`;
+        }
+        
+        if (custoMonitoramento >= 1000000000) {
+            custoFormatado = `R$${(custoMonitoramento / 1000000000).toFixed(3)} bilhões`;
+        } else if (custoMonitoramento >= 1000000) {
+            custoFormatado = `R$${(custoMonitoramento / 1000000).toFixed(3)} milhões`;
+        } else if (custoMonitoramento >= 1000) {
+            custoFormatado = `R$${(custoMonitoramento / 1000).toFixed(3)} mil`;
+        } else {
+            custoFormatado = `R$${custoMonitoramento.toFixed(2)}`;
+        }
+        
+        if (ganhoMonitoramento >= 1000000000) {
+            ganhoFormatado = `R$${(ganhoMonitoramento / 1000000000).toFixed(3)} bilhões`;
+        } else if (ganhoMonitoramento >= 1000000) {
+            ganhoFormatado = `R$${(ganhoMonitoramento / 1000000).toFixed(3)} milhões`;
+        } else if (ganhoMonitoramento >= 1000) {
+            ganhoFormatado = `R$${(ganhoMonitoramento / 1000).toFixed(3)} mil`;
+        } else {
+            ganhoFormatado = `R$${ganhoMonitoramento.toFixed(2)}`;
+        }
+
+        // EXIBIR RESULTADOS
         resultado.innerHTML = `
         <br>
         <h3>
@@ -361,14 +413,11 @@ function calcular() {
         </h3>
         Com base em dados e estimativas do mercado farmacêutico e de acordo com as diretrizes dos orgãos de vigilância foi possível calcular que:
         <br><br>
-        A ${ax_nome} por ser uma <u>empresa de porte ${ax_tamanho}</u> as perdas de lotes podem chegar a <b>R$${perdaLote / 1000000} milhões</b> no ano e caso ocorra a disponibilização de um medicamento com produção inadequada que ofereça <u>risco ${ax_risco}</u> à saúde a multa estimada é de <b>R$${multaTotal * 1000} mil</b>! Dessa forma, sem o monitoramento da MedSense você corre o perigo de perder <b>R$${multaTotal + (perdaLote / 1000000)} milhões</b>!
+        A ${ax_nome} por ser uma <u>empresa de porte ${ax_tamanho}</u> as perdas de lotes podem chegar a <b>${perdaFormatada}</b> no ano e caso ocorra a disponibilização de um medicamento com produção inadequada que ofereça <u>risco ${ax_risco}</u> à saúde a multa estimada é de <b>${multaFormatada}</b>! Dessa forma, sem o monitoramento da MedSense você corre o perigo de perder <b>${perdaTotalFormatada}</b>!
         <br>
-        Agora, pagando um custo estimado inicial de implementação da solução de monitoramento de <b>R$${custoMonitoramento / 1000} mil</b> (apenas <b>${custoMonitoramento / (ax_custoLote * ax_loteporMes)}%</b> em relação ao investido em medicamentos por mês) você chega a economizar até <b>R$${ganhoMonitoramento / 1000000} milhões</b>!
-        `
-
+        Agora, pagando um custo estimado inicial de implementação da solução de monitoramento de <b>${custoFormatado}</b> (apenas <b>${(custoMonitoramento / (ax_custoLote * ax_loteporMes) * 100).toFixed(2)}%</b> em relação ao investido em medicamentos por mês) você chega a economizar até <b>${ganhoFormatado}</b>!
+        `;
     }
-
-
 }
 
 

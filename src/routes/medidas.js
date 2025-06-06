@@ -3,6 +3,18 @@ var router = express.Router();
 
 var medidaController = require("../controllers/medidaController");
 
+
+router.post("/inserirarduino", (req, res) => {
+    try {
+         medidaController.inserirDadosArduino(req, res);
+    } catch (error) {
+        medidaController.inseriraleatorio(req, res);
+    }
+});
+
+
+
+
 router.get("/ultimas/temperatura", function (req, res) {
     medidaController.buscarUltimasTemperaturas(req, res);
 });

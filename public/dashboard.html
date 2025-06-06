@@ -82,16 +82,9 @@
         </select>
       </h3>
 
-      <h3>Setor:
-        <select name="" id=""
-          style="color: navy; border: none; outline: none; font-size: large; font-family: 'Poppins'; font-weight: 600;">
-          <option value="A">A</option>
-          <option value="B">B</option>
-          <option value="C">C</option>
-          <option value="D">D</option>
-          <option value="E">E</option>
-          <option value="F">F</option>
-        </select>
+      <h3>Setor: 1
+        <div id="setorTroca">
+        </div>
       </h3>
 
       <h3>Periodo dos registros:
@@ -427,10 +420,19 @@ function destroyChart(chartInstance) {
     });
 
     if (geladeira == 1) {
+         fetch("/medidas/inserirarduino", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fkSensorServer: 2 })
+          })
+          
+          .catch(() => {
+            simularArduino();
+          });
 
-        document.getElementById('myChart').style.display = 'block';
-        document.getElementById('myChart2').style.display = 'block';
-                
+          document.getElementById('myChart').style.display = 'block';
+          document.getElementById('myChart2').style.display = 'block';
+
         obterDadosGrafico(1);    
         obterDadosGrafico2(1);   
         
@@ -801,7 +803,7 @@ function destroyChart(chartInstance) {
           console.log(`Dados recebidossssssssss: ${JSON.stringify(resposta)}`);
 
           const setor = resposta[0].setor;
-          document.getElementById("kpi_setor_ocorrencias").textContent = "Setor: " + setor;
+          document.getElementById("kpi_setor_ocorrencias").textContent = setor;
 
         });
       } else {
@@ -1209,7 +1211,7 @@ function obterDadosGrafico3(temperatura) {
           console.log(`Dados recebidossssssssss: ${JSON.stringify(resposta)}`);
 
           const setor = resposta[0].setor;
-          document.getElementById("kpi_setor_ocorrencias").textContent = "Setor: " + setor;
+          document.getElementById("kpi_setor_ocorrencias").textContent = setor;
 
         });
       } else {
@@ -1603,7 +1605,7 @@ function obterDadosGrafico3(temperatura) {
           console.log(`Dados recebidossssssssss: ${JSON.stringify(resposta)}`);
 
           const setor = resposta[0].setor;
-          document.getElementById("kpi_setor_ocorrencias").textContent = "Setor: " + setor;
+          document.getElementById("kpi_setor_ocorrencias").textContent = setor;
 
         });
       } else {
