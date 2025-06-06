@@ -120,6 +120,7 @@ ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 4vw;
 }
 
 .temp, .umidade {
@@ -131,6 +132,8 @@ ul {
     align-items: center;
     font-size: 23px;
     font-weight: 500;
+    padding-left: 8px;
+    border-radius: 5px;
 }
 
 .graficos {
@@ -222,6 +225,7 @@ ul {
 
   textarea {
     width: 100%;
+    resize: none;
   }
   
   .alert-status.success {
