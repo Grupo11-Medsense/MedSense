@@ -52,7 +52,14 @@ create table registro (
         constraint fk_Sensor foreign key (fkSensor) references sensor(idSensor)
     );
 
-
+ create table alerta (
+    idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    temperatura DECIMAL(5,2),
+    dtRegistro DATETIME DEFAULT current_timestamp, 
+    fkSensor INT, 
+    CONSTRAINT FOREIGN KEY (fkSensor) REFERENCES sensor (idSensor)
+    );
+ 
 
 
 insert into empresa (nome, tokenAtivacao) values ('Empresa 1', 'ED145B');
