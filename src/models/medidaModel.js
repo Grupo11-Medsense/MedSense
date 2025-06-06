@@ -395,19 +395,7 @@ LIMIT 1;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-function inseriraleatorio(randTemperatura, randUmidade) {
+function inserirarduino(randTemperatura, randUmidade) {
 
     let instrucaoSql = "";
 
@@ -427,6 +415,37 @@ function inseriraleatorio(randTemperatura, randUmidade) {
     console.log("Inserindo na tabela REGISTRO");
     database.executar(instrucaoSql);  
 }
+
+
+
+
+
+
+
+
+
+
+
+// function inseriraleatorio(randTemperatura, randUmidade) {
+
+//     let instrucaoSql = "";
+
+    // if (randTemperatura < 2 || randTemperatura > 8 || randUmidade < 40 || randUmidade > 70) {
+    //     instrucaoSql = `
+    //         INSERT INTO alerta (temperatura, umidade, fkSensor) 
+    //         VALUES (${randTemperatura}, ${randUmidade}, 2);
+    //     `;
+    //     console.log("Inserindo na tabela ALERTA");
+    //     database.executar(instrucaoSql);  
+    // }
+
+//     instrucaoSql = `
+//         INSERT INTO registro (temperatura, umidade, fkSensor) 
+//         VALUES (${randTemperatura}, ${randUmidade}, 2);
+//     `;
+//     console.log("Inserindo na tabela REGISTRO");
+//     database.executar(instrucaoSql);  
+// }
 
 
 
@@ -560,17 +579,17 @@ LIMIT 1;
 
 
 
-     function inserirDadosArduino(req, res) {
-    try {
-        arduinoController.readData( (temperatura, umidade) => {
-             arduinoController.insertData(temperatura, umidade, 1);
-            res.status(200).json({ temperatura, umidade });
-        });
-    } catch (error) {
-        console.error('Erro na rota do Arduino:', error);
-        res.status(500).json({ error: error.message });
-    }
-}
+//      function inserirDadosArduino(req, res) {
+//     try {
+//         arduinoController.readData( (temperatura, umidade) => {
+//              arduinoController.insertData(temperatura, umidade, 1);
+//             res.status(200).json({ temperatura, umidade });
+//         });
+//     } catch (error) {
+//         console.error('Erro na rota do Arduino:', error);
+//         res.status(500).json({ error: error.message });
+//     }
+// }
 
 
 
@@ -580,7 +599,7 @@ module.exports = {
     buscarUltimasUmidades,
     buscarTemperaturaEmTempoReal,
     buscarUmidadeEmTempoReal,
-    inseriraleatorio,
+   // inseriraleatorio,
     buscarUltimoDesvio,
     buscarDiasSemDesvio,
     buscarSetorComDesvio,
@@ -603,5 +622,5 @@ module.exports = {
     buscarDiasSemDesvio3,
     buscarSetorComDesvio3,
     buscarAlertas3,
-    inserirDadosArduino
+    inserirarduino
 }

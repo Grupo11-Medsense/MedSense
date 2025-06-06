@@ -255,7 +255,11 @@ ul {
     box-shadow: 0 0 5px rgba(0, 31, 63, 0.5);
   }
 
-  
+  .btn_salvar {
+    padding: 1vh;
+    border-radius: 5px;
+    width: 20%;
+  }
 
 /* ----------------- RESPONSIVIDADE ----------------- */
 

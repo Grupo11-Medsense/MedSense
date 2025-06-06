@@ -185,26 +185,44 @@ const serial = async (
         console.log(`A leitura do arduino foi iniciada na porta ${portaArduino.path} utilizando Baud Rate de ${SERIAL_BAUD_RATE}`);
     });
 
-    arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
-        console.log(data);
-        const valores = data.split(';');
-        const Umidade = parseFloat(valores[0]);
-        const Temperatura = parseFloat(valores[1]);
-        const dtregistro = new Date();
+ let podeInserir = true; 
 
-        // Corrigido: armazenar corretamente
-        valoresSensorTemperatura.push(Temperatura);
-        valoresSensorUmidade.push(Umidade);
+arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
+    if (!podeInserir) return;
 
-        if (HABILITAR_OPERACAO_INSERIR) {
-            var fksensor = 2;
+    podeInserir = false; 
+
+    console.log(data);
+    const valores = data.split(';');
+    const Umidade = parseFloat(valores[0]);
+    const Temperatura = parseFloat(valores[1]);
+    const dtregistro = new Date();
+
+    valoresSensorTemperatura.push(Temperatura);
+    valoresSensorUmidade.push(Umidade);
+
+    if (HABILITAR_OPERACAO_INSERIR) {
+        const fksensor = 2;
+        
+        await poolBancoDados.execute(
+            "INSERT INTO registro (temperatura, umidade, fkSensor, dtregistro) VALUES (?, ?, ?, ?)",
+            [Temperatura, Umidade, fksensor, dtregistro]
+        );
+        console.log("Valores inseridos no banco:", Temperatura, Umidade);
+
+        if (Temperatura < 2 || Temperatura > 8 || Umidade < 40 || Umidade > 70) {
             await poolBancoDados.execute(
-                "INSERT INTO registro (temperatura, umidade, fkSensor, dtregistro) VALUES (?, ?, ?, ?)",
+                "INSERT INTO alerta (temperatura, umidade, fkSensor, dtregistro) VALUES (?, ?, ?, ?)",
                 [Temperatura, Umidade, fksensor, dtregistro]
             );
-            console.log("valores inseridos no banco: ", Temperatura + ", " + Umidade);
+            console.log("Alerta registrado para valores críticos");
         }
-    });
+    }
+
+    setTimeout(() => {
+        podeInserir = true;
+    }, 5000); 
+});
 
     arduino.on('error', (mensagem) => {
         console.error(`Erro no arduino (Mensagem: ${mensagem}`);

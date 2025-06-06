@@ -131,9 +131,9 @@ router.get("/buscarAlertas3", function (req, res) {
 
 
 
-router.post("/inseriraleatorio", function (req, res) {
-    medidaController.inseriraleatorio(req, res);
-});
+// router.post("/inseriraleatorio", function (req, res) {
+//     medidaController.inseriraleatorio(req, res);
+// });
 
 router.post("/inseriraleatorio2", function (req, res) {
     medidaController.inseriraleatorio2(req, res);

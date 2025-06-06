@@ -229,7 +229,7 @@
 
   function simularDadosArduino(geladeira) {
     if (geladeira == 1) {
-      simularArduino();
+   //   simularArduino();
     } else if (geladeira == 2) {
       simularArduino2();
     } else if (geladeira == 3) {
@@ -254,9 +254,10 @@
   function simularBaseadoNoSelect() {
     const geladeira = selecionarGeladeira.value;
 
-    if (geladeira == '1') {
-      simularArduino();
-    } else if (geladeira == '2') {
+    // if (geladeira == '1') {
+    //   simularArduino();
+    // } else
+      if (geladeira == '2') {
       simularArduino2();
     } else if (geladeira == '3') {
       simularArduino3();
@@ -265,43 +266,43 @@
 
 
 
-  function simularArduino() {
+  // function simularArduino() {
 
-    var umidade = (Math.random() * 100).toFixed();
-    var temperatura = (Math.random() * 10).toFixed(1);
-    console.log(umidade, temperatura);
+  //   var umidade = (Math.random() * 100).toFixed();
+  //   var temperatura = (Math.random() * 10).toFixed(1);
+  //   console.log(umidade, temperatura);
 
 
 
-    fetch("/medidas/inseriraleatorio", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+  //   fetch("/medidas/inseriraleatorio", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
 
-        randTemperatura: temperatura,
-        randUmidade: umidade,
-        fkSensorServer: 2
+  //       randTemperatura: temperatura,
+  //       randUmidade: umidade,
+  //       fkSensorServer: 2
 
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
+  //     }),
+  //   })
+  //     .then(function (resposta) {
+  //       console.log("resposta: ", resposta);
 
-        if (resposta.ok) {
-          console.log("Resposta ok");
-        } else {
-          throw "deu ruim na resposta!";
-          alert("deu ruim na resposta!");
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
+  //       if (resposta.ok) {
+  //         console.log("Resposta ok");
+  //       } else {
+  //         throw "deu ruim na resposta!";
+  //         alert("deu ruim na resposta!");
+  //       }
+  //     })
+  //     .catch(function (resposta) {
+  //       console.log(`#ERRO: ${resposta}`);
 
-      });
+  //     });
 
-  }
+  //}
 
 
 
@@ -426,9 +427,9 @@ function destroyChart(chartInstance) {
             body: JSON.stringify({ fkSensorServer: 2 })
           })
           
-          .catch(() => {
-            simularArduino();
-          });
+          // .catch(() => {
+          //   simularArduino();
+          // });
 
           document.getElementById('myChart').style.display = 'block';
           document.getElementById('myChart2').style.display = 'block';
@@ -796,14 +797,14 @@ function destroyChart(chartInstance) {
 
   function buscarSetorComDesvio() {
 
-    fetch(`/medidas//buscarSetorComDesvio`)
+    fetch(`/medidas/buscarSetorComDesvio`)
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidossssssssss: ${JSON.stringify(resposta)}`);
 
           const setor = resposta[0].setor;
-          document.getElementById("kpi_setor_ocorrencias").textContent = setor;
+          document.getElementById("kpi_setor_ocorrencias").textContent = "Setor" + setor;
 
         });
       } else {
