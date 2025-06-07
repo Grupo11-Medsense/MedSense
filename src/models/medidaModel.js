@@ -662,10 +662,8 @@ module.exports = {
     buscarSetorComDesvio3,
     buscarAlertas3,
     inserirarduino,
-<<<<<<< HEAD
-    attalerta
-=======
-    enviarObs,
-    mandarAlert
->>>>>>> 9115d803ad2b91bcb5109a8ad633d7396dff4773
+     enviarObs,
+     mandarAlert
+
 }
+
