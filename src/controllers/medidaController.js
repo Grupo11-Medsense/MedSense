@@ -492,6 +492,22 @@ function buscarAlertas3(req, res) {
 
 
 
+function mandarAlert(req, res) {
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    medidaModel.mandarAlert().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
 
 
 
@@ -676,14 +692,14 @@ function inseriraleatorio3(req, res) {
 
 
 function enviarObs(req, res) {
-
+    var idAlerta = req.params.idAlerta
     var coment = req.body.coment;
 
     if (coment == undefined) {
         res.status(400).send("Sua temperatura está undefined!");
     } else {
 
-        medidaModel.enviarObs(coment)
+        medidaModel.enviarObs(coment, idAlerta)
             .then(
                 function (resultado) {
                     if (resultado.length > 0) {
@@ -739,6 +755,8 @@ module.exports = {
     buscarDiasSemDesvio3,
     buscarSetorComDesvio3,
     buscarAlertas3,
-    inserirarduino
+    inserirarduino,
+    enviarObs,
+    mandarAlert
 
 }

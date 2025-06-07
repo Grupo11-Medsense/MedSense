@@ -143,9 +143,16 @@ router.post("/inseriraleatorio3", function (req, res) {
     medidaController.inseriraleatorio3(req, res);
 });
 
-
-router.post("/enviarObs", function (req, res) {
+router.put("/enviarAlerta/:idAlerta", function (req, res) {
     medidaController.enviarObs(req, res);
+});
+
+router.put("/enviarObs/:idAlerta", function (req, res) {
+    medidaController.enviarObs(req, res);
+});
+
+router.get("/mandarAlert", function (req, res) {
+    medidaController.mandarAlert(req, res);
 });
 
 

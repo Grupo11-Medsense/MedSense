@@ -593,6 +593,37 @@ LIMIT 1;
 
 
 
+    function enviarObs (coment, idAlerta){
+        var instrucaoSql = `update alerta set comentario = '${coment}' where idAlerta = ${idAlerta}`
+
+
+        console.log("Executando a instrução SQL: \n" + instrucaoSql);
+        return database.executar(instrucaoSql)
+    }
+
+
+
+    function mandarAlert() {
+        var instrucaoSql = `SELECT 
+    idAlerta,
+    temperatura,
+    umidade,
+    dtRegistro,
+    fkSensor,
+    comentario
+FROM 
+    alerta
+WHERE 
+    idAlerta IS NOT NULL
+ORDER BY 
+    idAlerta
+LIMIT 10; `
+
+        console.log("Executando a instrução SQL: \n" + instrucaoSql);
+        return database.executar(instrucaoSql)
+    }
+
+
 
 module.exports = {
     buscarUltimasTemperaturas,
@@ -622,5 +653,7 @@ module.exports = {
     buscarDiasSemDesvio3,
     buscarSetorComDesvio3,
     buscarAlertas3,
-    inserirarduino
+    inserirarduino,
+    enviarObs,
+    mandarAlert
 }
