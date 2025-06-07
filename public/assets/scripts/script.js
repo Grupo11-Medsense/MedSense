@@ -40,6 +40,7 @@ function cadastrar() {
     var cnpj = ipt_cnpj.value
     var telefone = ipt_telefone.value
     senha = ipt_senha.value
+    email = ipt_email.value;
     var codigoVar = codigo_input.value;
     var idEmpresaVincular
 
@@ -49,12 +50,14 @@ function cadastrar() {
     var temMaiuscula = false;
     var temMinuscula = false;
     var temNumero = false;
+    var temEspecial = false;
 
     // variaveis contendo as regras para a senha
     var caracteresEspeciais = "!@#$%^&*()_+-=[]{};':\"\\|,.<>/?";
     var numeros = "0123456789";
     var letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
     var letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 
 
     // varre a string 'senha' aplicando a verificação de todas as regras da senha 
@@ -70,7 +73,10 @@ function cadastrar() {
         } else if (numeros.includes(caracter)) {
             temNumero = true;
 
-        } 
+        }
+        else if (caracteresEspeciais.includes(caracter)) {
+            temEspecial = true;
+        }
     }
 
 
@@ -81,6 +87,10 @@ function cadastrar() {
     } else if (!temMaiuscula) {
         alert('A senha deve conter pelo menos uma letra maiúscula.');
         valido = false;
+    }
+    else if (!temMaiuscula) {
+        alert('A senha deve conter pelo menos uma letra maiúscula.');
+        valido = false;
     } else if (!temMinuscula) {
         alert('A senha deve conter pelo menos uma letra minúscula.');
         valido = false;
@@ -89,11 +99,25 @@ function cadastrar() {
         valido = false;
     } else if (ipt_senha.value != ipt_senha2.value) {
         alert('A senha e a confirmação devem coincidir')
-    } else if (codigo_input.value == '') {
-        alert('O código de vinculação deve ser preenchido')
-    } else if (temMaiuscula && temMinuscula && temNumero && (ipt_senha.value == ipt_senha2.value)) {
-        valido = true
     }
+    else if (!temEspecial) {
+        alert('A senha deve conter pelo menos um caractere especial (ex: !@#$%).');
+    }
+    else if (codigo_input.value == '') {
+        alert('O código de vinculação deve ser preenchido')
+    }
+    // verificação do email 
+    else if (!email.includes("@")) {
+        alert("Email inválido")
+    }
+
+    else if (temMaiuscula && temMinuscula && temNumero && temEspecial && (ipt_senha.value == ipt_senha2.value)) {
+        valido = true
+        alert('Cadastro realizado com sucesso!')
+    }
+
+
+
 
     for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
         if (listaEmpresasCadastradas[i].tokenAtivacao == codigoVar) {
@@ -111,7 +135,7 @@ function cadastrar() {
     // Se os dados fornecidos nos inputs de cadastros forem válido, a senha e email serao armazenados localmente com o localStorage e abre a janela do login com window.location
     if (valido) {
         email = ipt_email.value;
-        senha= ipt_senha.value;
+        senha = ipt_senha.value;
 
 
 
@@ -204,87 +228,87 @@ function entrar() {
 
     if (emailVar.includes("@medsense")) {
         fetch("/usuarios/autenticar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            emailServer: emailVar,
-            senhaServer: senhaVar
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    alert(`Seja bem-vindo(a)`);
+                    window.location = "BobIA.html";
+
+                });
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
         })
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO entrar()!")
-
-        if (resposta.ok) {
-            console.log(resposta);
-
-            resposta.json().then(json => {
-                console.log(json);
-                console.log(JSON.stringify(json));
-                sessionStorage.EMAIL_USUARIO = json.email;
-                sessionStorage.NOME_USUARIO = json.nome;
-                sessionStorage.ID_USUARIO = json.idUsuario;
-                alert(`Seja bem-vindo(a)`);
-                window.location = "BobIA.html";
-
-            });
-        } else {
-
-            console.log("Houve um erro ao tentar realizar o login!");
-
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    })
     }
     else {
 
-    console.log("FORM LOGIN: ", emailVar);
-    console.log("FORM SENHA: ", senhaVar);
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
 
-    fetch("/usuarios/autenticar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            emailServer: emailVar,
-            senhaServer: senhaVar
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    alert(`Seja bem-vindo(a)`);
+                    window.location = "dashboard.html";
+
+                });
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
         })
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO entrar()!")
 
-        if (resposta.ok) {
-            console.log(resposta);
-
-            resposta.json().then(json => {
-                console.log(json);
-                console.log(JSON.stringify(json));
-                sessionStorage.EMAIL_USUARIO = json.email;
-                sessionStorage.NOME_USUARIO = json.nome;
-                sessionStorage.ID_USUARIO = json.idUsuario;
-                alert(`Seja bem-vindo(a)`);
-                window.location = "dashboard.html";
-
-            });
-        } else {
-
-            console.log("Houve um erro ao tentar realizar o login!");
-
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    })
-
-}
+    }
 }
 
 
@@ -352,7 +376,7 @@ function calcular() {
 
         // FORMATAÇÃO DOS VALORES
         var perdaFormatada, multaFormatada, perdaTotalFormatada, custoFormatado, ganhoFormatado;
-        
+
         if (perdaLote >= 1000000000) {
             perdaFormatada = `R$${(perdaLote / 1000000000).toFixed(3)} bilhões`;
         } else if (perdaLote >= 1000000) {
@@ -362,7 +386,7 @@ function calcular() {
         } else {
             perdaFormatada = `R$${perdaLote.toFixed(2)}`;
         }
-        
+
         var multaValor = multaTotal * 1000000;
         if (multaValor >= 1000000000) {
             multaFormatada = `R$${(multaValor / 1000000000).toFixed(3)} bilhões`;
@@ -373,7 +397,7 @@ function calcular() {
         } else {
             multaFormatada = `R$${multaValor.toFixed(2)}`;
         }
-        
+
         var perdaTotalValor = multaValor + perdaLote;
         if (perdaTotalValor >= 1000000000) {
             perdaTotalFormatada = `R$${(perdaTotalValor / 1000000000).toFixed(3)} bilhões`;
@@ -384,7 +408,7 @@ function calcular() {
         } else {
             perdaTotalFormatada = `R$${perdaTotalValor.toFixed(2)}`;
         }
-        
+
         if (custoMonitoramento >= 1000000000) {
             custoFormatado = `R$${(custoMonitoramento / 1000000000).toFixed(3)} bilhões`;
         } else if (custoMonitoramento >= 1000000) {
@@ -394,7 +418,7 @@ function calcular() {
         } else {
             custoFormatado = `R$${custoMonitoramento.toFixed(2)}`;
         }
-        
+
         if (ganhoMonitoramento >= 1000000000) {
             ganhoFormatado = `R$${(ganhoMonitoramento / 1000000000).toFixed(3)} bilhões`;
         } else if (ganhoMonitoramento >= 1000000) {
@@ -423,3 +447,43 @@ function calcular() {
 
 
 
+
+
+function olho_senha1() {
+    const senha = document.getElementById("ipt_senha");
+    const icone = document.getElementById("id_icone");
+
+    if (senha.type == "password") {
+        senha.type = "text"; // Mostra a senha
+        icone.src = "assets/image/olho-sim.png"; // Ícone de "olho fechado"
+    } else {
+        senha.type = "password"; // Oculta a senha
+        icone.src = "assets/image/olho-nao.png"; // Ícone de "olho aberto"
+    }
+}
+
+function olho_senha2() {
+    const senha = document.getElementById("ipt_senha2");
+    const icone = document.getElementById("id_icone2");
+
+    if (senha.type == "password") {
+        senha.type = "text"; // Mostra a senha
+        icone.src = "assets/image/olho-sim.png"; // Ícone de "olho fechado"
+    } else {
+        senha.type = "password"; // Oculta a senha
+        icone.src = "assets/image/olho-nao.png"; // Ícone de "olho aberto"
+    }
+}
+
+function olho_senha3() {
+    const senha = document.getElementById("ipt_senhaLogin");
+    const icone = document.getElementById("id_icone3");
+
+    if (senha.type == "password") {
+        senha.type = "text"; // Mostra a senha
+        icone.src = "assets/image/olho-sim.png"; // Ícone de "olho fechado"
+    } else {
+        senha.type = "password"; // Oculta a senha
+        icone.src = "assets/image/olho-nao.png"; // Ícone de "olho aberto"
+    }
+}

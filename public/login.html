@@ -30,8 +30,14 @@
                 <label>Insira seu usuário</label>
                 <input type="text" placeholder="usuario@medsense.com" id="ipt_emailLogin">
 
-                <label>Senha</label>
-                <input type="password" placeholder="Senha" id="ipt_senhaLogin">
+
+                <!-- div de confirmar senha com o olho -->
+                <div style="position: relative; width: 100%;">
+                    <label>Senha</label>
+                    <input type="password" placeholder="Senha" id="ipt_senhaLogin">
+                    <span onclick="olho_senha3()" style="position: absolute; right: 10px; top:33px; cursor: pointer;">
+                        <img id="id_icone3" src="assets/image/olho-nao.png" width="20"> </span>
+                </div>
 
             </div>
             <div class="botao" onclick="entrar()"><button>Entrar</button></div>
@@ -52,7 +58,7 @@
         <a href="index.html">Voltar para a página inicial</a>
     </div>
 
-    
+
 </body>
 
 </html>

@@ -149,4 +149,9 @@ router.post("/enviarObs", function (req, res) {
 });
 
 
+
+router.get("/attalerta", function (req, res) {
+    medidaController.attalerta(req, res);
+});
+
 module.exports = router;

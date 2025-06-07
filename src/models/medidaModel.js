@@ -420,6 +420,14 @@ function inserirarduino(randTemperatura, randUmidade) {
 
 
 
+function attalerta() {
+
+    var instrucaoSql = `SELECT *from alerta order by dtRegistro limit 15 `
+
+    console.log("Selecionando os alertas")
+     database.executar(instrucaoSql)
+}
+
 
 
 
@@ -622,5 +630,6 @@ module.exports = {
     buscarDiasSemDesvio3,
     buscarSetorComDesvio3,
     buscarAlertas3,
-    inserirarduino
+    inserirarduino,
+    attalerta
 }

@@ -44,11 +44,23 @@
                     <label>Codio de Ativação</label>
                     <input id="codigo_input" type="text" placeholder="Insira aqui seu código">
 
-                    <label>Senha</label>
-                    <input type="password" id="ipt_senha" placeholder="Senha">
+                    <div style="position: relative; width: 100%;">
+                        <label>Senha</label>
+                        <input type="password" id="ipt_senha" placeholder="Senha">
+                        <span onclick="olho_senha1()"
+                            style="position: absolute; right: 10px; top: 33px; cursor: pointer;">
+                            <img id="id_icone" src="assets/image/olho-nao.png" width="20"> </span>
+                    </div>
 
-                    <label>Confirmar Senha</label>
-                    <input type="password" id="ipt_senha2" placeholder="Confirme a senha">
+
+                    <!-- div de confirmar senha com o olho -->
+                    <div style="position: relative; width: 100%;">
+                        <label>Confirmar Senha</label>
+                        <input type="password" id="ipt_senha2" placeholder="Confirme a senha">
+                        <span onclick="olho_senha2()"
+                            style="position: absolute; right: 10px; top:33px; cursor: pointer;">
+                            <img id="id_icone2" src="assets/image/olho-nao.png" width="20"> </span>
+                    </div>
                 </div>
 
             </div>
