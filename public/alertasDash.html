@@ -78,23 +78,8 @@
         </h3>
 
         <div class="cards">
-
-            <div class="alerta-card cool-card">
-                <div class="alerta-header">
-                  
-                  <h3 class="alert-title">⚠️ Umidade Baixa</h3> <span class="alert-date">18 de Abril de 2025</span>
-                </div>
-                <p class="alert-desc">
-                  A umidade registrada foi de <strong>39%</strong>, abaixo do ideal.
-                </p>
-                <div class="obs-alert">
-                  <p><b style="color: rgb(116, 0, 0);">Adicione uma observação sobre a ocorrência</b></p>
-                  <textarea name="" id="textarea-alerta"></textarea>
-
-                  <button onclick="salvar()" class="btn_salvar">Salvar</button>
                   
                 </div>
-              </div>
               
              
               </div>
@@ -104,3 +89,131 @@
 </body>
 
 </html>
+<script>
+
+    window.onload = () => {
+        buscarAlertas()
+        criarCardAlerta()
+    }
+
+
+
+
+function buscarAlertas() {
+   fetch(`/medidas/mandarAlert`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Erro na resposta do servidor');
+        return response.json();
+    })
+    .then(data => {
+        const cardsContainer = document.querySelector('.cards');
+        cardsContainer.innerHTML = '';
+
+        const alertas = Array.isArray(data) ? data : (data.alertas || []);
+        
+        if (alertas.length === 0) {
+            cardsContainer.innerHTML = '<p class="sem-alertas">Nenhum alerta recente encontrado</p>';
+            return;
+        }
+
+        alertas.sort((a, b) => new Date(b.dtRegistro) - new Date(a.dtRegistro));
+        
+        alertas.forEach(alerta => {
+            if (alerta) {
+                criarCardAlerta(alerta, cardsContainer);
+            }
+        });
+    })
+    .catch(error => {
+        console.error("Erro:", error);
+        document.querySelector('.cards').innerHTML = 
+            '<p class="erro-alertas">Erro ao carregar alertas. Tente recarregar a página.</p>';
+    });
+}
+
+function criarCardAlerta(alerta, container) {
+    const temp = parseFloat(alerta.temperatura) || 0;
+    const umid = parseFloat(alerta.umidade) || 0;
+    
+    const problemas = [];
+    if (temp < 2) problemas.push('Temperatura MUITO BAIXA');
+    if (temp > 8) problemas.push('Temperatura MUITO ALTA');
+    if (umid < 40) problemas.push('Umidade MUITO BAIXA');
+    if (umid > 70) problemas.push('Umidade MUITO ALTA');
+    
+    if (problemas.length == 0) return;
+
+    const tipoAlerta = problemas.join(' e ');
+    //Ele coloca o E entre os dois alertas caso aja
+
+    const dataFormatada = new Date(alerta.dtRegistro).toLocaleString('pt-BR');
+    // ele formata a data sozinho no modelo BR
+
+    const sensorId = alerta.fkSensor || alerta.RSensor || 'N/A';
+    
+    const cardHTML = `
+        <div class="alerta-card ${temp < 2 || temp > 8 || umid < 40 || umid > 70 ? 'cool-card' : 'cool-card'}">
+            <div class="alerta-header">
+                <h3 class="alert-title">⚠️ ${tipoAlerta}</h3>
+                <span class="alert-date">${dataFormatada}</span>
+            </div>
+            <p class="alert-desc">
+                <strong>Sensor:</strong> ${sensorId}<br>
+                <strong>Temperatura:</strong> ${temp}°C | 
+                <strong>Umidade:</strong> ${umid}%
+                ${alerta.comentario ? `<br><br><strong>Observação:</strong> ${alerta.comentario}` : ''}
+            </p>
+            <div class="obs-alert">
+                <p><b style="color: rgb(116, 0, 0);">Adicione uma observação</b></p>
+                <textarea id="textareaAlerta-${alerta.idAlerta}" 
+                          placeholder="${alerta.comentario ? 'Editar observação' : 'Digite aqui'}">${alerta.comentario || ''}</textarea>
+                <button onclick="salvar(${alerta.idAlerta})" class="btn_salvar">Salvar</button>
+            </div>
+        </div>
+    `;
+    
+    container.insertAdjacentHTML('beforeend', cardHTML);
+}
+
+
+function salvar(idAlerta) {
+    const textarea = document.getElementById(`textareaAlerta-${idAlerta}`);
+    const novoComentario = textarea.value;
+
+    textarea.value = ``
+
+    fetch(`/medidas/enviarObs/${idAlerta}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            coment: novoComentario
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            textarea.placeholder = "Observação salva!";
+            textarea.value = "";
+
+        } else {
+            textarea.placeholder = "Erro ao salvar. Tente novamente.";
+        }
+    })
+    .catch(error =>
+    console.error("Erro:", error)
+);
+    setTimeout(buscarAlertas, 500); 
+}
+
+
+
+
+
+</script>

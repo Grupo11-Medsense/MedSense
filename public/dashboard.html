@@ -1,6 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #alerta {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #7d0000;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      display: none;
+      animation: fadein 0.5s, fadeout 0.5s 4.5s;
+    }
+
+    @keyframes fadein {
+      from {opacity: 0; transform: translateY(-10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @keyframes fadeout {
+      from {opacity: 1; transform: translateY(0);}
+      to {opacity: 0; transform: translateY(-10px);}
+    }
+
+    
+  </style>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,6 +67,7 @@
 
     <div class="navegacao">
 
+      <div id="alerta"></div>
 
       <ul>
         <li class="icon">
@@ -136,6 +170,8 @@
 
     </div>
   </div>
+
+  
 </body>
 
 </html>
@@ -826,6 +862,7 @@ function destroyChart(chartInstance) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          mostrarAlerta()
 
            const totalAlertas = resposta[0].total_alertas;
         console.log(`Total de alertas: ${totalAlertas}`);
@@ -1181,7 +1218,7 @@ function obterDadosGrafico3(temperatura) {
 
   function buscarDiasSemDesvio2() {
 
-    fetch(`/medidas//buscarDiasSemDesvio2`)
+    fetch(`/medidas/buscarDiasSemDesvio2`)
       .then(function (response) {
         if (response.ok) {
           response.json().then(function (resposta) {
@@ -1234,6 +1271,7 @@ function obterDadosGrafico3(temperatura) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          mostrarAlerta()
 
            const totalAlertas = resposta[0].total_alertas;
         console.log(`Total de alertas: ${totalAlertas}`);
@@ -1628,6 +1666,7 @@ function obterDadosGrafico3(temperatura) {
       if (response.ok) {
         response.json().then(function (resposta) {
           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          mostrarAlerta()
 
            const totalAlertas = resposta[0].total_alertas;
         console.log(`Total de alertas: ${totalAlertas}`);
@@ -1642,4 +1681,22 @@ function obterDadosGrafico3(temperatura) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
       });
   }
+
+
+
+
+
+
+
+
+  function mostrarAlerta() {
+      const alerta = document.getElementById('alerta');
+
+      alerta.innerHTML = `⚠️ ALERTA! OS LIMITES ESTÃO FORA DO IDEAL, CHEQUE AGORA A SESSÃO DE ALERTAS!!! Faixa ideal 2ºC a 8ºC de temperatura e 40% a 70% de umidade`;
+      alerta.style.display = 'block';
+
+      setTimeout(() => {
+        alerta.style.display = 'none';
+      }, 4000);
+    }
 </script>
