@@ -616,7 +616,7 @@ FROM
 WHERE 
     idAlerta IS NOT NULL
 ORDER BY 
-    idAlerta
+    idAlerta desc
 LIMIT 10; `
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
