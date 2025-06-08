@@ -749,6 +749,11 @@ function destroyChart(chartInstance) {
 
         // Funcionalidade da bibliteca chart JS, ele atualiza sozinho
         chart.update();
+
+        if (registro.temperatura < 2 || registro.temperatura > 8) {
+            mostrarAlerta(registro.temperatura, null);
+        }
+
       })
       .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
   }
@@ -771,6 +776,10 @@ function destroyChart(chartInstance) {
 
         // Funcionalidade da bibliteca chart JS, ele atualiza sozinho
         chart.update();
+        if (registro.umidade < 40 || registro.umidade > 70) {
+            mostrarAlerta(null, registro.umidade);
+        }
+
       })
       .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
   }
@@ -1159,6 +1168,10 @@ function obterDadosGrafico3(temperatura) {
         }
 
         chart.update();
+        
+        if (registro.temperatura < 2 || registro.temperatura > 8) {
+            mostrarAlerta(registro.temperatura, null);
+        }
       })
       .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
   }
@@ -1180,6 +1193,9 @@ function obterDadosGrafico3(temperatura) {
         }
 
         chart.update();
+        if (registro.umidade < 40 || registro.umidade > 70) {
+            mostrarAlerta(null, registro.umidade);
+        }
       })
       .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
   }
@@ -1554,6 +1570,11 @@ function obterDadosGrafico3(temperatura) {
         }
 
         chart.update();
+
+        if (registro.temperatura < 2 || registro.temperatura > 8) {
+            mostrarAlerta(registro.temperatura, null);
+        }
+
       })
       .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
   }
@@ -1575,6 +1596,9 @@ function obterDadosGrafico3(temperatura) {
         }
 
         chart.update();
+        if (registro.umidade < 40 || registro.umidade > 70) {
+            mostrarAlerta(null, registro.umidade);
+        }
       })
       .catch(error => console.error("Erro ao buscar temperatura tempo real:", error));
   }
@@ -1689,14 +1713,42 @@ function obterDadosGrafico3(temperatura) {
 
 
 
-  function mostrarAlerta() {
-      const alerta = document.getElementById('alerta');
+let ultimaTemperatura = null;
+let ultimaUmidade = null;
+let alertaAtivo = false;
+let timeoutAlerta = null;
 
-      alerta.innerHTML = `⚠️ ALERTA! OS LIMITES ESTÃO FORA DO IDEAL, CHEQUE AGORA A SESSÃO DE ALERTAS!!! Faixa ideal 2ºC a 8ºC de temperatura e 40% a 70% de umidade`;
-      alerta.style.display = 'block';
+function mostrarAlerta(temperatura, umidade) {
+    if (temperatura === undefined && umidade === undefined) return;
+    
+    const temperaturaFora = temperatura !== undefined && (temperatura < 2 || temperatura > 8);
+    const umidadeFora = umidade !== undefined && (umidade < 40 || umidade > 70);
+    
+    if ((temperaturaFora || umidadeFora) && 
+        (temperatura !== ultimaTemperatura || umidade !== ultimaUmidade || 
+         ultimaTemperatura === null || ultimaUmidade === null)) {
+        
+        if (timeoutAlerta) {
+            clearTimeout(timeoutAlerta);
+        }
+        
+        if (temperatura !== undefined) ultimaTemperatura = temperatura;
+        if (umidade !== undefined) ultimaUmidade = umidade;
+        
+        alertaAtivo = true;
+        const alerta = document.getElementById('alerta');
+        
+        let mensagem = '⚠️ ALERTA! ';
+        
+        mensagem += 'OS VALORES ESTÃO FORA DA FAIXA IDEAL, VÁ PARA A SESSÃO DE ALERTAS AGORA!(Faixa ideal: 2°C a 8°C e 40% a 70%)';
+        
+        alerta.innerHTML = mensagem;
+        alerta.style.display = 'block';
 
-      setTimeout(() => {
-        alerta.style.display = 'none';
-      }, 4000);
+        timeoutAlerta = setTimeout(() => {
+            alerta.style.display = 'none';
+            alertaAtivo = false;
+        }, 4000);
     }
+}
 </script>
