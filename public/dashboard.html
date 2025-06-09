@@ -4,22 +4,31 @@
 
 <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
 
     #alerta {
       position: fixed;
       top: 20px;
       right: 20px;
-      background-color: #7d0000;
+      background-color: #b10202;
       color: white;
-      padding: 16px 24px;
+      padding: 3vh;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       z-index: 9999;
       display: none;
+      width: 500px;
+      height: 150px;
+
       animation: fadein 0.5s, fadeout 0.5s 4.5s;
     }
+
+    .num_kpi {
+      font-size: 30px;
+      font-weight: 700;
+    }
+    
 
     @keyframes fadein {
       from {opacity: 0; transform: translateY(-10px);}
@@ -79,6 +88,11 @@
           <img src="assets/image/alerticon.svg">
           <a href="alertasDash.html"> Alertas</a>
         </li>
+
+        <li class="icon">
+          <img src="assets/image/jira.svg" alt="" style="width: 30px;">
+          <a href="https://medsense.atlassian.net/servicedesk/customer/portal/1" target="_blank">Central de ajuda</a>
+        </li>
       </ul>
 
     </div>
@@ -121,27 +135,25 @@
         </div>
       </h3>
 
-      <h3>Periodo dos registros:
-        <input type="date">
-      </h3>
+    
     </div>
 
     <div class="kpis">
       <div class="indicador" style="background-color: navy;">
         <h3>Ultimo registro <br> fora do conforme </h3>
-        <h1 id="kpi_temp_media"></h1>
+        <p id="kpi_temp_media" class="num_kpi"></p>
       </div>
       <div class="indicador" style="background-color: navy;">
         <h3>Setor com <br> mais ocorrências </h3>
-        <h3 id="kpi_setor_ocorrencias"></h3>
+        <p id="kpi_setor_ocorrencias"  class="num_kpi"></p>
       </div>
       <div class="indicador" style="background-color: rgb(11, 143, 11);">
         <h3>Dias sem alertas <br> (últimos 30 dias)</h3>
-        <h1 id="kpi_conformidade"></h1>
+        <p id="kpi_conformidade"  class="num_kpi"></p>
       </div>
       <div class="indicador" style="background-color: rgb(133, 7, 7);">
         <h3>Alertas emitidos <br> esse mês</h3>
-        <h1 id="kpi_alertas_mes"></h1>
+        <p id="kpi_alertas_mes"  class="num_kpi"></p>
       </div>
     </div>
 
@@ -1738,9 +1750,9 @@ function mostrarAlerta(temperatura, umidade) {
         alertaAtivo = true;
         const alerta = document.getElementById('alerta');
         
-        let mensagem = '⚠️ ALERTA! ';
+        let mensagem = '<h3>⚠️ ALERTA! <h3>';
         
-        mensagem += 'OS VALORES ESTÃO FORA DA FAIXA IDEAL, VÁ PARA A SESSÃO DE ALERTAS AGORA!(Faixa ideal: 2°C a 8°C e 40% a 70%)';
+        mensagem += '<p>OS VALORES ESTÃO FORA DA FAIXA IDEAL, VÁ PARA A SESSÃO DE ALERTAS AGORA!(Faixa ideal: 2°C a 8°C e 40% a 70%)<p/>';
         
         alerta.innerHTML = mensagem;
         alerta.style.display = 'block';
@@ -1748,7 +1760,7 @@ function mostrarAlerta(temperatura, umidade) {
         timeoutAlerta = setTimeout(() => {
             alerta.style.display = 'none';
             alertaAtivo = false;
-        }, 4000);
+        }, 5000);
     }
 }
 </script>

@@ -21,12 +21,14 @@ textarea[type="text"] {
     padding: 8px;
     font-size: 16px;
     border-radius: 10px;
-    width: 800px;
+    width: 970px;
     height: 150px;
     border: black 3px solid;
     background-color: transparent;
     font-family: 'Poppins';
     outline: none;
+    margin-right: 20vh;
+    resize:none;
 }
 
 select,
@@ -106,7 +108,7 @@ button:hover {
 }
 
 .caixa-texto {
-    width: 100%; 
+    width: 110%; 
     height: 50%;
     display: flex;
     align-items: center;
