@@ -9,25 +9,7 @@ MedSense.
 ![alt text](https://img.shields.io/badge/licença-MIT-green)
 
 Sistema de monitoramento em tempo real de temperatura e umidade para armazenamento seguro de medicamentos termolábeis, garantindo a eficácia terapêutica, conformidade regulatória e redução de perdas financeiras.
-Índice
 
-    Contexto do Problema
-
-    Objetivos do Projeto
-
-    Justificativa e Impacto
-
-    Como Funciona
-
-    Tecnologias Utilizadas
-
-    Instalação e Uso do Protótipo
-
-    Estrutura do Projeto
-
-    Como Contribuir
-
-    Licença
 
 📖 Contexto do Problema
 
