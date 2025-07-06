@@ -1,4 +1,4 @@
-MoniTemp - Monitoramento de Medicamentos Termolábeis
+MedSense.
 
 ![alt text](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
